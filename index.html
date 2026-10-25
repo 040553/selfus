@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SelfUs.art — Two people. Two selfies. One SelfUs.</title>
+<style>
+:root{font-family:system-ui,-apple-system,sans-serif;background:#101827;color:#f4f7ff}*{box-sizing:border-box}body{margin:0}main{max-width:520px;margin:auto;padding:22px 16px 50px}header{text-align:center}h1{font-size:52px;letter-spacing:-3px;margin:12px 0 0}h1 span,.us{color:#B3F04B}header p,.hint{color:#bccbd8;line-height:1.45}.panel{background:#1b293b;border:1px solid #34465b;border-radius:20px;padding:16px;margin-top:20px}h2{margin:8px 0 12px;font-size:23px}.eyebrow{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#80D7DC;font-weight:bold}.stage{position:relative;aspect-ratio:1;background:#0a1421;overflow:hidden;border-radius:12px;margin:12px 0 0}.stage video,.stage canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* V35: front-camera video remains a hidden source. The preview and capture share one canvas rendering path. */
+.stage #camera{opacity:0;pointer-events:none}
+.stage #live{z-index:1}
+.stage #frozen{z-index:2}
+.stage #ghost{z-index:3}
+.stage canvas{pointer-events:none}.controls{display:grid;gap:10px;margin-top:12px}.controls button,button{min-height:52px;border:0;border-radius:13px;padding:12px 16px;background:#B3F04B;color:#10212c;font-size:16px;font-weight:750;cursor:pointer}.controls button.secondary{background:#354b64;color:#fff}.controls button:disabled{opacity:.45}.hidden{display:none!important}.slider{margin:12px 0 8px}.slider label{display:flex;justify-content:space-between;gap:12px;font-size:14px}.slider input{width:100%;height:35px;accent-color:#B3F04B;touch-action:pan-x}.status{font-size:13px;color:#ffd58a;min-height:22px;line-height:1.4;margin:9px 0 0}.status:empty{display:none}.result{width:100%;aspect-ratio:1;display:block;border-radius:12px}.resolutions{display:flex;gap:7px;flex-wrap:wrap}.resolutions button{min-height:39px;font-size:12px;padding:8px;background:#354b64;color:white}.resolutions button.active{background:#B3F04B;color:#10212c}footer{text-align:center;color:#a4b6c7;font-size:12px;margin:25px 0}
+/* Both captures use the same header height and the shutter immediately follows the square. */
+.capture-header{min-height:122px}.capture-header h2{margin:6px 0 5px;font-size:19px;line-height:1.25;font-weight:650}.capture-header .hint{font-size:13px;line-height:1.3;margin:4px 0 0}.capture-header .eyebrow{font-size:clamp(24px,6.5vw,30px);line-height:1.15;letter-spacing:-.025em;text-transform:none;font-weight:800}.capture-controls{margin-top:10px}.capture-controls #take{order:0}.capture-controls #retake{order:1}.capture-controls #next{order:2}
+@media(max-width:420px){main{padding:12px 10px 35px}.panel{padding:12px;margin-top:12px}.capture-header{min-height:122px}.capture-header h2{font-size:18px}.capture-header .hint{font-size:12px}.stage{margin-top:7px}.capture-controls{margin-top:8px}.controls button{min-height:48px}}
+/* Keep the site title below the iPhone camera cutout / Dynamic Island on every screen.
+   The safety margin is shared by intro, capture and result because the header is persistent. */
+main{padding-top:max(44px,calc(env(safe-area-inset-top, 0px) + 18px))}
+@media(max-width:420px){main{padding-top:max(48px,calc(env(safe-area-inset-top, 0px) + 18px))}}
+header h1{line-height:1.12;white-space:nowrap}
+/* The domain identifies the site, while SelfUs remains the central visual mark. */
+header h1 .brand-domain{font-size:.42em;font-weight:650;letter-spacing:-.02em;color:#bccbd8;vertical-align:baseline}
+header p{margin:8px 0 0;font-size:clamp(12px,4.3vw,18px);font-weight:600;white-space:nowrap;letter-spacing:-.022em}
+/* Introduction: a turquoise principle first, a matching invitation near the end. */
+.intro-explanation{font-size:15px;color:#d4e0ed;line-height:1.55;margin:0 0 12px}
+.intro-encouragement{text-align:center;font-size:clamp(19px,5.1vw,23px);font-weight:750;color:#80D7DC;line-height:1.3;margin:18px 0 4px}
+/* The single introductory formula shares the invitation’s typography. */
+.intro-tagline{margin:1px 0 12px}
+/* Capturing: first see the square, then its relevant instruction, then the shutter. */
+.capture-guide{font-size:13px;line-height:1.35;color:#bccbd8;margin:9px 0 4px;text-align:center}
+.capture-header{min-height:78px}
+@media(max-width:420px){.capture-header{min-height:72px}.capture-guide{font-size:12px;margin:8px 0 3px}}
+.intro-assurance{text-align:center;font-weight:650;color:#80D7DC;line-height:1.5;margin:4px 0 14px}
+.intro-privacy{text-align:center;font-size:13px;color:#bccbd8;line-height:1.5;margin:8px 0 14px}
+/* Personal note is optional; only the saved image receives a white print border. */
+.note-field{margin-top:18px}.note-field label{display:block;font-size:14px;font-weight:650;margin-bottom:8px}
+.note-field input{width:100%;border:1px solid #668097;border-radius:10px;background:#0e1b2c;color:#fff;padding:13px;font:inherit;font-size:16px}
+.note-field input::placeholder{color:#aab8c9}.note-field input:focus-visible{outline:2px solid #B3F04B;outline-offset:2px}
+.note-help{display:flex;justify-content:space-between;gap:10px;color:#bccbd8;font-size:12px;margin:5px 0 0}
+.contact{font-size:13px;text-align:center;color:#bccbd8;margin:24px 0 4px;line-height:1.5}
+.contact a{color:#80D7DC;overflow-wrap:anywhere}
+
+/* V12: clear hierarchy between the retake and continue actions. */
+.capture-controls #retake{justify-self:center;width:auto;min-height:40px;padding:8px 19px;font-size:14px;font-weight:600;background:transparent;color:#cbd7e3;border:1px solid #71859a;white-space:nowrap}
+.capture-controls #retake .retake-icon{display:inline-block;margin-right:6px;vertical-align:-4px;flex:none}
+.capture-controls #next{justify-self:stretch;width:100%;background:#B3F04B;color:#10212c;font-weight:750}
+/* V17: six resolutions, three equal-width buttons per row. */
+.resolutions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-width:100%;margin:0 auto}
+.resolutions button{width:100%;white-space:nowrap;min-width:0;padding:9px 3px;font-size:clamp(11px,3vw,13px);font-variant-numeric:tabular-nums}
+
+/* V14 — centered mobile presentation; keep the slider's label/value at opposite ends. */
+header,.panel,.capture-header,.intro-explanation,.intro-assurance,.intro-privacy,.hint,
+.eyebrow,h1,h2,.status,.note-field,.note-field label,.contact,footer{text-align:center}
+.note-field input{text-align:center}
+.note-help{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center}
+#sliderWrap{text-align:center}
+#sliderWrap label{justify-content:space-between;text-align:left}
+#sliderWrap output{text-align:right}
+.resolutions{justify-content:center}
+/* The image itself identifies SelfUs on the final screen: no duplicate masthead. */
+.output-heading{font-size:clamp(25px,6.8vw,33px);line-height:1.18;margin:4px 0 8px;text-align:center}
+
+/* V27 — compact final screen: keep the Save action visible on mobile. */
+#output{margin-top:0;padding-top:10px;padding-bottom:12px}
+#output .output-heading{margin:2px 0 6px}
+#output>.hint{font-size:13px;line-height:1.25;margin:8px 0 7px}
+#output #result{
+  /* The composite has the same on-screen width as each capture stage. */
+  width:100%;
+  height:auto;
+  margin-inline:auto;
+}
+#output .resolutions{gap:5px}
+#output .resolutions button{
+  min-height:31px;
+  padding:5px 2px;
+  border-radius:9px;
+  font-size:clamp(11px,3vw,12px);
+}
+#output .note-field{margin-top:10px}
+#output .note-field label{margin-bottom:5px}
+#output .note-field input{padding:10px 9px}
+#output .note-help{display:block;text-align:center;margin-top:5px;font-size:11px}
+#output .controls{margin-top:10px}
+#output .contact{margin-top:16px}
+/* Keep the composite full width on short screens too; controls may scroll below. */
+/* The permission hint is temporary and appears before the browser asks for the camera. */
+.camera-permission{font-size:12px;line-height:1.4;color:#80D7DC;margin:7px 0 0;text-align:center}
+#retryCamera{font-size:14px;min-height:42px;padding:9px 15px;background:#354b64;color:white;justify-self:center}
+
+.lang-switch{display:flex;justify-content:center;gap:1px;margin:4px auto 0}
+/* Visual pills are smaller; the surrounding button remains comfortable to tap. */
+.lang-switch button{display:flex;align-items:center;justify-content:center;min-height:36px;min-width:38px;padding:0;border:0;background:transparent;border-radius:7px;color:#fff;font-size:10px;font-weight:750;line-height:1;cursor:pointer}
+/* Language selection is indicated by an underline, not by the brand or step colors. */
+.lang-switch button span{position:relative;display:flex;align-items:center;justify-content:center;min-width:31px;height:23px;padding:0 5px;border-radius:6px;background:#354b64;color:#bbc8d8}
+.lang-switch button[aria-pressed="true"] span{color:#f4f7ff}
+.lang-switch button[aria-pressed="true"] span::after{content:"";position:absolute;bottom:1px;left:50%;width:17px;height:2px;transform:translateX(-50%);background:#f4f7ff;border-radius:2px}
+.lang-switch button:focus-visible{outline:2px solid #cbd7e3;outline-offset:1px}
+/* Keep step and discovery buttons on one line on narrow phones. */
+/* V52: uniform type across all action buttons, regardless of text or language. */
+.controls button:not(#retryCamera){font-size:16px;line-height:1.25}
+.capture-controls #retake{font-size:16px}
+.capture-controls #next{white-space:nowrap;font-size:16px;padding-inline:8px}
+@media(max-width:420px){
+  .controls button:not(#retryCamera){font-size:15px}
+  .capture-controls #retake,.capture-controls #next{font-size:15px}
+}
+
+
+/* V58 — final screen: one row for a 40-character caption and its fixed-width counter.
+   Keep native input text at 16px to avoid focus zoom in iOS Safari. */
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+#output .note-field{margin-top:25px}
+#output .caption-row{display:flex;align-items:center;gap:5px;width:100%}
+#output .caption-row input{flex:1 1 0;min-width:0;width:0;font-size:16px;text-align:left;padding:11px 9px}
+#output .caption-row input::placeholder{font-size:clamp(11px,3.3vw,13px);opacity:1}
+#output .caption-row input:focus::placeholder{color:transparent}
+#output #messageCount{flex:0 0 40px;width:40px;text-align:right;color:#bccbd8;font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap}
+#output .controls{margin-top:17px}
+
+</style></head><body><main>
+<header><h1 aria-label="SelfUs.art">Self<span>Us</span><span class="brand-domain">.art</span></h1></header><nav class="lang-switch" aria-label="Langue / Language / Idioma"><button type="button" id="langEN" aria-pressed="true" aria-label="English"><span>EN</span></button><button type="button" id="langES" aria-pressed="false" aria-label="Español"><span>ES</span></button><button type="button" id="langFR" aria-pressed="false" aria-label="Français"><span>FR</span></button></nav>
+<section id="intro" class="panel">
+<p class="intro-encouragement intro-tagline" data-i18n="tagline">Two people. Two selfies. One Self<span class="us">Us</span>.</p>
+<p class="intro-explanation" data-i18n="intro1">To help align them, both selfies are taken with this smartphone in the same spot.</p>
+<p class="intro-explanation"><span data-i18n="intro2">Self<span class="us">Us</span>.art will combine them in a checkerboard pattern, alternating squares from each. Nothing is invented.</span></p>
+<p class="intro-encouragement" data-i18n="fun">Play freely!</p>
+<p class="intro-assurance" data-i18n="assurance">No AI. No morphing. No imports. No cloud.</p>
+<div class="controls"><button id="start" type="button" data-i18n="start">Let's create our SelfUs!</button></div></section>
+<section id="capture" class="panel hidden">
+<div class="capture-header"><div class="eyebrow" id="step" data-i18n="step">Selfie 1 / 2</div><h2 id="heading" data-i18n="heading">One of you faces the camera</h2><p class="camera-permission hidden" id="cameraPermission" role="status" data-i18n="permission">Allow your browser to access the camera when prompted</p></div>
+<div class="stage"><video id="camera" autoplay muted playsinline webkit-playsinline></video><canvas id="live" width="720" height="720"></canvas><canvas id="frozen" class="hidden" width="720" height="720"></canvas><canvas id="ghost" width="720" height="720"></canvas></div>
+<p class="hint capture-guide" id="guide" data-i18n="guide">Align your eyes and nose with the guides</p>
+<div class="controls capture-controls"><button id="take" type="button" data-i18n="take">I'll take my selfie</button><button id="retake" type="button" class="secondary hidden" data-i18n="retake"><svg aria-hidden="true" class="retake-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11a9 9 0 1 1 2.7 6.4"/><path d="M3 4v7h7"/></svg> I'll retake my selfie</button><button id="next" type="button" class="hidden" data-i18n="next">Let's move to selfie 2 →</button></div>
+<p class="status" id="status" role="status"></p><div id="retryWrap" class="controls hidden"><button id="retryCamera" type="button" data-i18n="retry">Try camera again</button></div>
+</section>
+<section id="output" class="panel hidden"><h2 class="output-heading" data-i18n="outhead">Here's your Self<span class="us">Us</span>!</h2><canvas id="result" class="result" width="720" height="720"></canvas><p class="hint" data-i18n="resolution">Checkerboard resolution</p><div id="resolutions" class="resolutions"></div>
+<div class="note-field"><label class="sr-only" for="personalMessage" data-i18n="caption">Caption (optional)</label><div class="caption-row"><input id="personalMessage" type="text" maxlength="40" placeholder="Write your caption (optional)…" data-i18n-placeholder="placeholder" autocomplete="off" aria-describedby="messageCount"><output id="messageCount" for="personalMessage" aria-live="off">0/40</output></div></div>
+<div class="controls"><button id="save" type="button" data-i18n="save">I’ll save our SelfUs</button></div>
+<p class="contact"><span data-i18n="contact">Questions, suggestions, or want to share your experience?</span><br><a href="mailto:contact@selfus.art">contact@selfus.art</a></p></section>
+</main>
+<script>
+(()=>{'use strict';
+const I18N={
+en:{
+title:"SelfUs.art — Two people. Two selfies. One SelfUs.",tagline:"Two people. Two selfies. One SelfUs.",intro1:"To help align them, both selfies are taken with this smartphone in the same spot.",
+intro2:"SelfUs.art will combine them in a checkerboard pattern, alternating squares from each. Nothing is invented.",
+fun:"Play freely!",assurance:"No AI. No morphing. No imports. No cloud.",
+start:"Let's create our SelfUs!",step:"Selfie 1 / 2",heading:"One of you faces the camera",guide:"Align your eyes and nose with the guides",
+permission:"Allow your browser to access the camera when prompted",take:"I'll take my selfie",retake:"I'll retake my selfie",next:"Let's move to selfie 2 →",overlay:"First selfie overlay",retry:"Try camera again",
+outhead:"Here's your SelfUs!",outdesc:"Two selfies. Alternating squares. One shared image.",resolution:"Checkerboard resolution",caption:"Caption (optional)",
+placeholder:"Write your caption (optional)…",notehelp:"Added under the saved photo.",save:"I’ll save our SelfUs",
+contact:"Questions, suggestions, or want to share your experience?",
+secondHeading:"It’s the other person’s turn to take the smartphone",secondGuide:"Stand in the same spot. Use the overlay to align your face with selfie 1",
+firstCaptured:"First selfie captured. Retake or continue to the next step.",secondCaptured:"Second selfie captured.",
+create:"Let's discover our SelfUs!",cameraNotReady:"Camera is not ready yet.",captureFailed:"Capture failed: ",
+cameraReady:"Live camera ready. Tap to capture.",cameraHTTPS:"Camera access requires HTTPS and a supported browser.",
+cameraVideo:"Camera video not ready",cameraBlocked:"Camera access is blocked. Enable camera access for your browser in your phone settings, then try again.",
+cameraUnable:"Unable to start the camera: ",imageFailed:"Unable to create the image. Please try again.",
+madeWith:"Made with ",onDate:" on ",locale:"en-GB"
+},
+fr:{
+tagline:"Deux personnes. Deux selfies. Un SelfUs.",intro1:"Pour faciliter leur alignement, les deux selfies sont pris avec ce smartphone, au même endroit.",
+intro2:"SelfUs.art les combinera en damier, en alternant les cases de l’un et de l’autre. Rien n’est inventé.",
+fun:"Amusez-vous librement !",assurance:"Sans IA. Sans morphing. Sans importation. Sans cloud.",
+start:"Créons notre SelfUs !",step:"Selfie 1 / 2",heading:"L’un de vous se place face à la caméra",guide:"Aligne tes yeux et ton nez sur les repères",
+permission:"Autorise l’accès à la caméra lorsque ton navigateur le demande",take:"Je prends mon selfie",retake:"Je reprends mon selfie",next:"Passons au selfie 2 →",overlay:"Superposition du premier selfie",retry:"Réessayer la caméra",
+outhead:"Voici votre SelfUs !",outdesc:"Deux selfies. Des cases alternées. Une image commune.",resolution:"Résolution du damier",caption:"Légende (facultative)",
+placeholder:"Écrivez votre légende (facultative)…",notehelp:"Ajoutée sous la photo enregistrée.",save:"J’enregistre notre SelfUs",
+contact:"Une question, une suggestion ou envie de partager votre expérience ?",
+secondHeading:"C’est au tour de l’autre de prendre le smartphone",secondGuide:"Place-toi au même endroit. Utilise la superposition pour aligner ton visage sur le selfie 1",
+firstCaptured:"Premier selfie pris. Tu peux le reprendre ou passer à l’étape suivante.",secondCaptured:"Second selfie pris.",
+create:"Découvrons notre SelfUs !",cameraNotReady:"La caméra n’est pas encore prête.",captureFailed:"Échec de la prise de vue : ",
+cameraReady:"Caméra prête. Appuie pour prendre la photo.",cameraHTTPS:"L’accès à la caméra nécessite HTTPS et un navigateur compatible.",
+cameraVideo:"L’image de la caméra n’est pas prête",cameraBlocked:"L’accès à la caméra est bloqué. Autorise-le dans les réglages de ton téléphone, puis réessaie.",
+cameraUnable:"Impossible de démarrer la caméra : ",imageFailed:"Impossible de créer l’image. Réessaie.",
+madeWith:"Créé avec ",onDate:" le ",locale:"fr-FR",title:"SelfUs.art — Deux personnes. Deux selfies. Un SelfUs."
+},
+es:{
+ title:"SelfUs.art — Dos personas. Dos selfies. Un SelfUs.",
+ tagline:"Dos personas. Dos selfies. Un SelfUs.",intro1:"Para facilitar su alineación, los dos selfies se toman con este teléfono en el mismo lugar.",
+ intro2:"SelfUs.art los combinará en un patrón de damero, alternando las casillas de uno y otro. No se inventa nada.",
+ fun:"¡Diviértanse libremente!",assurance:"Sin IA. Sin morphing. Sin importaciones. Sin nube.",
+ start:"¡Creemos nuestro SelfUs!",step:"Selfie 1 / 2",heading:"Uno de los dos se coloca frente a la cámara",guide:"Alinea tus ojos y tu nariz con las guías",
+ permission:"Permite que el navegador acceda a la cámara cuando te lo solicite",take:"Me hago mi selfie",retake:"Repito mi selfie",next:"Pasemos al selfie 2 →",overlay:"Superposición del primer selfie",retry:"Volver a probar la cámara",
+ outhead:"¡Aquí está el SelfUs!",outdesc:"Dos selfies. Casillas alternadas. Una imagen compartida.",resolution:"Resolución del damero",caption:"Leyenda (opcional)",
+ placeholder:"Escriban su leyenda (opcional)…",notehelp:"Se añadirá debajo de la foto guardada.",save:"Guardo nuestro SelfUs",
+ contact:"¿Preguntas, sugerencias o ganas de compartir tu experiencia?",
+ secondHeading:"Ahora le toca a la otra persona tomar el teléfono",secondGuide:"Colócate en el mismo lugar. Usa la superposición para alinear tu rostro con el selfie 1",
+ firstCaptured:"Primer selfie tomado. Puedes repetirlo o pasar al siguiente paso.",secondCaptured:"Segundo selfie tomado.",
+ create:"¡Descubramos nuestro SelfUs!",cameraNotReady:"La cámara todavía no está lista.",captureFailed:"No se pudo tomar la foto: ",
+ cameraReady:"Cámara lista. Pulsa el botón para hacer la foto.",cameraHTTPS:"Para acceder a la cámara se necesita HTTPS y un navegador compatible.",
+ cameraVideo:"La imagen de la cámara todavía no está lista.",cameraBlocked:"El acceso a la cámara está bloqueado. Actívalo en los ajustes del teléfono y vuelve a intentarlo.",
+ cameraUnable:"No se pudo iniciar la cámara: ",imageFailed:"No se pudo crear la imagen. Inténtalo de nuevo.",
+ madeWith:"Creado con ",onDate:" el ",locale:"es-ES"
+}
+};
+let lang='en';
+const tr=key=>I18N[lang][key]||I18N.en[key]||key;
+// Make the brand's green "Us" consistent in descriptive text across all languages.
+// Do not color interactive buttons or personal captions.
+function renderTranslatedText(node, text){
+ if(node.closest('button') || !text.includes('SelfUs')){
+  node.textContent=text;
+  return;
+ }
+ const parts=text.split('SelfUs');
+ const content=[];
+ for(let i=0;i<parts.length;i++){
+  if(parts[i])content.push(document.createTextNode(parts[i]));
+  if(i<parts.length-1){
+   content.push(document.createTextNode('Self'));
+   const us=document.createElement('span');
+   us.className='us';
+   us.textContent='Us';
+   content.push(us);
+  }
+ }
+ node.replaceChildren(...content);
+}
+function setLanguage(next){
+ lang=I18N[next]?next:'en';document.documentElement.lang=lang;
+ document.title=tr('title');
+ for(const code of ['EN','ES','FR'])document.getElementById('lang'+code).setAttribute('aria-pressed',String(lang===code.toLowerCase()));
+ for(const node of document.querySelectorAll('[data-i18n]')){
+  const key=node.dataset.i18n;
+  if(key==='retake'){const textNode=[...node.childNodes].find(n=>n.nodeType===3);if(textNode)textNode.textContent=' '+tr(key);}
+  else renderTranslatedText(node,tr(key));
+ }
+ for(const node of document.querySelectorAll('[data-i18n-placeholder]'))node.placeholder=tr(node.dataset.i18nPlaceholder);
+ if(document.getElementById('capture')&&!document.getElementById('capture').classList.contains('hidden')){
+  ui();
+  const nextBtn=document.getElementById('next');
+  if(!nextBtn.classList.contains('hidden'))nextBtn.textContent=phase===1?tr('create'):tr('next');
+ }
+}
+document.getElementById('langEN').addEventListener('click',()=>setLanguage('en'));
+document.getElementById('langFR').addEventListener('click',()=>setLanguage('fr'));
+document.getElementById('langES').addEventListener('click',()=>setLanguage('es'));
+
+const el=id=>document.getElementById(id),SIZE=720;
+const video=el('camera'),live=el('live'),frozen=el('frozen'),ghost=el('ghost'),result=el('result');
+let stream=null,phase=0,shots=[null,null],taken=false,cells=64,opening=false;
+let previewFrame=0,previewReady=false;
+function display(name){for(const id of ['intro','capture','output'])el(id).classList.toggle('hidden',id!==name);document.querySelector('header').classList.toggle('hidden',name==='output');}
+function message(s){el('status').textContent=s}
+function permissionHint(s){const hint=el('cameraPermission');hint.textContent=s;hint.classList.toggle('hidden',!s)}
+function stop(){if(previewFrame){cancelAnimationFrame(previewFrame);previewFrame=0}previewReady=false;if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}video.srcObject=null}
+// Draw every live frame through the exact crop + mirror operation used to make a selfie.
+function renderPreview(){
+ previewFrame=0;
+ if(!stream)return;
+ if(!taken&&video.readyState>=2&&video.videoWidth&&video.videoHeight){
+  copyFrame(video,live);previewReady=true;
+ }
+ previewFrame=requestAnimationFrame(renderPreview);
+}
+async function cameraStart(){
+ if(opening)return;opening=true;el('take').disabled=true;el('retryWrap').classList.add('hidden');permissionHint(phase===0?tr('permission'):'');message('');
+ try{
+  stop();
+  if(!navigator.mediaDevices?.getUserMedia)throw Error(tr('cameraHTTPS'));
+  stream=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:{exact:'user'}}});
+  video.srcObject=stream;
+  await video.play();
+  if(!video.videoWidth)await new Promise((resolve,reject)=>{const timeout=setTimeout(()=>reject(Error(tr('cameraVideo'))),6000);video.addEventListener('loadeddata',()=>{clearTimeout(timeout);resolve()},{once:true})});
+  renderPreview();
+  permissionHint('');
+  message('');
+  el('take').disabled=false;
+ }catch(e){
+  permissionHint('');
+  const denied=e.name==='NotAllowedError'||e.name==='PermissionDeniedError'||e.name==='SecurityError';
+  message(denied?tr('cameraBlocked'):tr('cameraUnable')+e.message);
+  el('take').disabled=true;
+  el('retryWrap').classList.remove('hidden');
+ }
+ finally{opening=false}
+}
+// Same centered square as the visible object-fit:cover preview (square stage).
+function copyFrame(source,canvas){
+ const w=source.videoWidth||source.width,h=source.videoHeight||source.height;
+ if(!w||!h)throw Error(tr('cameraVideo'));
+ const side=Math.min(w,h),x=(w-side)/2,y=(h-side)/2;
+ const ctx=canvas.getContext('2d');ctx.clearRect(0,0,SIZE,SIZE);
+ // Mirrored crop for the preview: captured selfies are copied from this preview canvas.
+ if(source===video){
+  ctx.save();ctx.translate(SIZE,0);ctx.scale(-1,1);
+  ctx.drawImage(source,x,y,side,side,0,0,SIZE,SIZE);
+  ctx.restore();
+ }else ctx.drawImage(source,x,y,side,side,0,0,SIZE,SIZE);
+}
+// Fixed alignment guides: eye line is horizontal, nose axis is vertical.
+// On the second selfie, use the first portrait overlay alone, without competing geometric guides.
+function drawFaceGuides(ctx,showOval){
+ const cx=SIZE/2,cy=SIZE*0.42,rx=SIZE*0.16,ry=SIZE*0.21;
+ ctx.save();
+ ctx.strokeStyle='rgba(255,255,255,.94)';ctx.lineWidth=3;
+ ctx.lineCap='round';ctx.setLineDash([14,10]);
+ if(showOval){ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);ctx.stroke();}
+ ctx.beginPath();ctx.moveTo(cx-rx*0.92,cy-ry*0.12);ctx.lineTo(cx+rx*0.92,cy-ry*0.12);ctx.stroke();
+ ctx.setLineDash([8,8]);
+ ctx.beginPath();ctx.moveTo(cx,cy-ry*1.08);ctx.lineTo(cx,cy+ry*1.08);ctx.stroke();
+ ctx.restore();
+}
+function ghostDraw(){
+ const ctx=ghost.getContext('2d');ctx.clearRect(0,0,SIZE,SIZE);
+ if(taken)return;
+ if(phase===1&&shots[0]){
+  // The live-camera canvas remains untouched and continuously updated.
+  // Overlay the first selfie at a fixed 40% opacity; keep the live camera unchanged.
+  ctx.save();ctx.globalAlpha=0.40;
+  ctx.drawImage(shots[0],0,0);ctx.restore();
+ }
+ if(phase===0)drawFaceGuides(ctx,true);
+}
+function ui(){
+ el('step').textContent=phase===0?'Selfie 1 / 2':'Selfie 2 / 2';
+ el('heading').textContent=phase===0?tr('heading'):tr('secondHeading');
+ el('guide').textContent=phase===0?tr('guide'):tr('secondGuide');
+ el('guide').classList.toggle('hidden',taken);
+ el('take').textContent=tr('take');
+ el('take').classList.toggle('hidden',taken);
+ el('retake').classList.toggle('hidden',!taken);
+ el('next').classList.toggle('hidden',!taken);
+ el('next').textContent=phase===0?tr('next'):tr('create');
+ live.classList.toggle('hidden',taken);
+ frozen.classList.toggle('hidden',!taken);
+ ghostDraw();
+}
+function capture(){
+ if(!stream||!previewReady){message(tr('cameraNotReady'));return}
+ try{
+  const shot=document.createElement('canvas');shot.width=shot.height=SIZE;copyFrame(live,shot);
+  shots[phase]=shot;copyFrame(shot,frozen);taken=true;ui();
+  message(phase===0?tr('firstCaptured'):tr('secondCaptured'));
+  if(phase===1){
+   el('next').textContent=tr('create');el('next').classList.remove('hidden');
+  }
+ }catch(e){message(tr('captureFailed')+e.message)}
+}
+async function begin(){shots=[null,null];phase=0;taken=false;el('next').textContent=tr('next');display('capture');ui();await cameraStart()}
+async function next(){
+ if(phase===0){phase=1;taken=false;el('next').textContent=tr('next');ui();message('');}
+ else if(shots[0]&&shots[1]){stop();compose();display('output')}
+}
+async function retake(){shots[phase]=null;taken=false;el('next').classList.add('hidden');ui();if(!stream)await cameraStart();else message(tr('cameraReady'))}
+function compose(){
+ const a=shots[0].getContext('2d').getImageData(0,0,SIZE,SIZE).data;
+ const b=shots[1].getContext('2d').getImageData(0,0,SIZE,SIZE).data;
+ const ctx=result.getContext('2d'),out=ctx.createImageData(SIZE,SIZE);
+ for(let y=0;y<SIZE;y++)for(let x=0;x<SIZE;x++){
+  const k=(y*SIZE+x)*4,src=((Math.floor(x*cells/SIZE)+Math.floor(y*cells/SIZE))%2===0)?a:b;
+  out.data[k]=src[k];out.data[k+1]=src[k+1];out.data[k+2]=src[k+2];out.data[k+3]=255;
+ }
+ ctx.putImageData(out,0,0);
+}
+el('start').addEventListener('click',begin);
+el('retryCamera').addEventListener('click',cameraStart);
+el('take').addEventListener('click',capture);
+el('retake').addEventListener('click',retake);
+el('next').addEventListener('click',next);
+function makePolaroid(){
+ // Keep the on-screen composite unchanged; decorate only the exported PNG.
+ const note=el('personalMessage').value.trim();
+ const margin=24,bottom=note?144:110,w=SIZE+2*margin,h=SIZE+margin+bottom;
+ const print=document.createElement('canvas');print.width=w;print.height=h;
+ const c=print.getContext('2d');c.fillStyle='#ffffff';c.fillRect(0,0,w,h);
+ c.drawImage(result,margin,margin,SIZE,SIZE);
+ c.fillStyle='#20242b';c.textAlign='center';c.textBaseline='middle';
+ const top=SIZE+margin;
+ if(note){
+  let fontSize=31;
+  while(fontSize>17){c.font='600 '+fontSize+'px system-ui,-apple-system,sans-serif';if(c.measureText(note).width<=w-56)break;fontSize--;}
+  c.fillText(note,w/2,top+42,w-52);
+ }
+ const date=new Date().toLocaleDateString(tr('locale'),{day:'numeric',month:'short',year:'numeric'});
+ // Single black cartouche: Made with SelfUs.art on 21 Oct 2026.
+ const cartoucheParts=[
+  {text:tr('madeWith'),weight:'500',color:'#ffffff'},
+  {text:'Self',weight:'750',color:'#ffffff'},
+  {text:'Us',weight:'750',color:'#B3F04B'},
+  {text:'.art',weight:'750',color:'#ffffff'},
+  {text:tr('onDate')+date,weight:'500',color:'#ffffff'}
+ ];
+ const textSize=22;
+ const fontFor=weight=>weight+' '+textSize+'px system-ui,-apple-system,sans-serif';
+ const measure=(text,weight)=>{c.font=fontFor(weight);return c.measureText(text).width};
+ const padX=12, badgeH=39, r=7;
+ const textW=cartoucheParts.reduce((w,p)=>w+measure(p.text,p.weight),0);
+ const badgeW=textW+padX*2;
+ const x=(w-badgeW)/2;
+ const y=top+(note?105:64);
+ const by=y-badgeH/2;
+ c.save();c.textAlign='left';c.textBaseline='middle';
+ c.fillStyle='#101827';
+ c.beginPath();
+ c.moveTo(x+r,by);c.lineTo(x+badgeW-r,by);
+ c.quadraticCurveTo(x+badgeW,by,x+badgeW,by+r);
+ c.lineTo(x+badgeW,by+badgeH-r);
+ c.quadraticCurveTo(x+badgeW,by+badgeH,x+badgeW-r,by+badgeH);
+ c.lineTo(x+r,by+badgeH);
+ c.quadraticCurveTo(x,by+badgeH,x,by+badgeH-r);
+ c.lineTo(x,by+r);c.quadraticCurveTo(x,by,x+r,by);c.closePath();c.fill();
+ let tx=x+padX;
+ for(const part of cartoucheParts){c.font=fontFor(part.weight);c.fillStyle=part.color;c.fillText(part.text,tx,y);tx+=measure(part.text,part.weight)}
+ c.restore();
+ return print;
+}
+el('personalMessage').addEventListener('input',()=>{
+ el('messageCount').textContent=el('personalMessage').value.length+'/40';
+});
+el('save').addEventListener('click',()=>{
+ makePolaroid().toBlob(blob=>{
+  if(!blob){alert(tr('imageFailed'));return}
+  const url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='SelfUs.png';document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),10000);
+ },'image/png');
+});
+for(const n of [4,16,32,64,128,256]){const b=document.createElement('button');b.type='button';b.textContent=n+' × '+n;b.classList.toggle('active',n===cells);b.addEventListener('click',()=>{cells=n;el('resolutions').querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===b));if(shots[0]&&shots[1])compose()});el('resolutions').appendChild(b)}
+const detected=(navigator.languages?.[0] || navigator.language || 'en').toLowerCase().split('-')[0];
+setLanguage(['fr','en','es'].includes(detected)?detected:'en');
+window.addEventListener('pagehide',stop);
+})();
+</script></body></html>
