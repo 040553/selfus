@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/34020299/README.md)
 # SelfUs.art — GitHub Pages
 
 Déposez les six fichiers de ce dossier à la racine de votre dépôt GitHub : `index.html`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png`, `manifest.webmanifest`, `README.md`.
