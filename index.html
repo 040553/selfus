@@ -52,8 +52,8 @@ header p{margin:8px 0 0;font-size:clamp(12px,4.3vw,18px);font-weight:600;white-s
 .note-field input{width:100%;border:1px solid #668097;border-radius:10px;background:#0e1b2c;color:#fff;padding:13px;font:inherit;font-size:16px}
 .note-field input::placeholder{color:#aab8c9}.note-field input:focus-visible{outline:2px solid #FF6A00;outline-offset:2px}
 .note-help{display:flex;justify-content:space-between;gap:10px;color:#bccbd8;font-size:12px;margin:5px 0 0}
-.contact{font-size:13px;text-align:center;color:#bccbd8;margin:24px 0 4px;line-height:1.5}
-.contact a{color:#EFFF00;overflow-wrap:anywhere}
+.contact{font-size:clamp(9px,2.9vw,12px);text-align:center;color:#bccbd8;margin:24px 0 4px;line-height:1.5;white-space:nowrap}
+.contact a{color:#EFFF00;overflow-wrap:normal}
 
 /* V12: clear hierarchy between the retake and continue actions. */
 .capture-controls #retake{justify-self:center;width:auto;min-height:40px;padding:8px 19px;font-size:14px;font-weight:600;background:transparent;color:#cbd7e3;border:1px solid #71859a;white-space:nowrap}
@@ -87,8 +87,8 @@ header,.panel,.capture-header,.intro-explanation,.intro-assurance,.intro-privacy
 }
 #output .resolutions{gap:5px}
 #output .resolutions button{
-  min-height:31px;
-  padding:5px 2px;
+  min-height:27px;
+  padding:3px 2px;
   border-radius:9px;
   font-size:clamp(11px,3vw,12px);
 }
@@ -220,6 +220,8 @@ header,.panel,.capture-header,.intro-explanation,.intro-assurance,.intro-privacy
 #output .resolutions button.active{background:#223247;color:#FF6A00;font-weight:800}
 #output .note-field{margin-top:17px}
 #output .output-actions{margin-top:25px}
+/* A quiet question immediately above the composite image. */
+#output .half-question{margin:0 0 9px;text-align:center;color:#EFFF00;font-size:18px;line-height:1.35;font-weight:500}
 /* Match the home screen's vertical gap below the shared header. */
 #output{margin-top:20px}
 @media(max-width:420px){#output{margin-top:12px}}
@@ -243,10 +245,10 @@ header,.panel,.capture-header,.intro-explanation,.intro-assurance,.intro-privacy
 <div class="controls capture-controls"><button id="take" type="button" data-i18n="take">I'll take my selfie</button><button id="retake" type="button" class="secondary hidden" data-i18n="retake"><svg aria-hidden="true" class="retake-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11a9 9 0 1 1 2.7 6.4"/><path d="M3 4v7h7"/></svg> I'll retake my selfie</button><button id="next" type="button" class="hidden" data-i18n="next">Let's move to selfie 2 →</button></div>
 <p class="status" id="status" role="status"></p><div id="retryWrap" class="controls hidden"><button id="retryCamera" type="button" data-i18n="retry">Try camera again</button></div>
 </section>
-<section id="output" class="panel hidden"><canvas id="result" class="result" width="720" height="720"></canvas><p class="hint" data-i18n="resolution">Checkerboard resolution</p><div id="resolutions" class="resolutions"></div>
+<section id="output" class="panel hidden"><p class="half-question" data-i18n="halfQuestion">Where is my other half?</p><canvas id="result" class="result" width="720" height="720"></canvas><p class="hint" data-i18n="resolution">Checkerboard resolution</p><div id="resolutions" class="resolutions"></div>
 <div class="note-field"><label class="sr-only" for="personalMessage" data-i18n="caption">Caption (optional)</label><div class="caption-row"><input id="personalMessage" type="text" maxlength="40" placeholder="Write your caption (optional)…" data-i18n-placeholder="placeholder" autocomplete="off" aria-describedby="messageCount"><output id="messageCount" for="personalMessage" aria-live="off">0/40</output></div></div>
 <div class="controls output-actions"><button id="share" type="button" class="secondary" data-i18n="share" disabled>Share</button><button id="save" type="button" data-i18n="save">Save</button></div><p id="shareStatus" class="share-status" role="status" aria-live="polite"></p>
-<p class="contact"><span data-i18n="contact">Questions, suggestions, or want to share your experience?</span><br><a href="mailto:contact@selfus.art">contact@selfus.art</a></p></section>
+<p class="contact"><span data-i18n="contact">Any feedback?</span> <a href="mailto:contact@selfus.art">contact@selfus.art</a></p></section>
 <section id="saveOptions" class="panel hidden" aria-labelledby="saveOptionsTitle">
 <h2 id="saveOptionsTitle" data-i18n="saveOptionsTitle">Save your SelfUs</h2>
 <div class="save-choices">
@@ -280,13 +282,13 @@ en:{
 copyright:"© 2026 SelfUs.art — All rights reserved.",
  saveOptionsTitle:"Save your SelfUs",saveCaptioned:"With caption",saveSquare:"Square format",exampleCaption:"Your caption",saveExplain:"The square format is prepared for later printing with a compatible instant photo printer.",backToSelfus:"← Back to SelfUs",
 title:"SelfUs.art — Two people. Two selfies. One SelfUs.",tagline:"Two people. Two selfies. One SelfUs.",taglineFirst:"Two people. Two selfies.",taglineSecond:"One SelfUs",intro1:"Both selfies are taken with this smartphone in the same spot.",
-intro2:"SelfUs.art will combine them in a checkerboard pattern, alternating squares from each. Nothing is invented. No fake, only us.",
+intro2:"SelfUs.art will combine them in a checkerboard pattern, alternating squares from each, so each person contributes half of the final image. Nothing is invented. No fake, only us.",
 fun:"Play freely!",assurance:"No AI. No morphing. No imports. No cloud.",
 start:"Take a SelfUs!",step:"Selfie 1 / 2",heading:"One of you faces the camera",guide:"Align your eyes and nose with the guides",
 permission:"Allow your browser to access the camera when prompted",take:"I'll take my selfie",retake:"I'll retake my selfie",next:"Let's move to selfie 2 →",overlay:"First selfie overlay",retry:"Try camera again",
-outhead:"Here's your SelfUs!",outdesc:"Two selfies. Alternating squares. One shared image.",resolution:"Checkerboard resolution",caption:"Caption (optional)",
+outhead:"Here's your SelfUs!",halfQuestion:"Where is my other half?",outdesc:"Two selfies. Alternating squares. One shared image.",resolution:"Checkerboard resolution",caption:"Caption (optional)",
 placeholder:"Write your caption (optional)…",notehelp:"Added under the saved photo.",save:"Save",share:"Share",shareUnavailable:"Direct image sharing is not supported by this browser. You can save your SelfUs and share it from your photos.",shareFailed:"Unable to share this image. Please try again.",
-contact:"Questions, suggestions, or want to share your experience?",
+contact:"Any feedback?",
 secondHeading:"It’s the other person’s turn to take the smartphone",secondGuide:"Stand in the same spot. Use the overlay to align your face with selfie 1",
 firstCaptured:"First selfie captured. Retake or continue to the next step.",secondCaptured:"Second selfie captured.",
 create:"Let's discover our SelfUs!",cameraNotReady:"Camera is not ready yet.",captureFailed:"Capture failed: ",
@@ -299,13 +301,13 @@ fr:{
 copyright:"© 2026 SelfUs.art — Tous droits réservés.",
  saveOptionsTitle:"Enregistrer votre SelfUs",saveCaptioned:"Avec légende",saveSquare:"Format carré",exampleCaption:"Votre légende",saveExplain:"Le format carré est destiné à une impression ultérieure sur une imprimante instantanée compatible.",backToSelfus:"← Retour au SelfUs",
 tagline:"Deux personnes. Deux selfies. Un SelfUs.",taglineFirst:"Deux personnes. Deux selfies.",taglineSecond:"Un SelfUs",intro1:"Les deux selfies sont pris avec ce smartphone, au même endroit.",
-intro2:"SelfUs.art les combinera en damier, en alternant les cases de l’un et de l’autre. Rien n’est inventé. No fake, only us.",
+intro2:"SelfUs.art les combinera en damier, en alternant les cases de l’un et de l’autre, chacun contribuant ainsi pour moitié à l’image finale. Rien n’est inventé. No fake, only us.",
 fun:"Amusez-vous librement !",assurance:"No AI. No morphing. No import. No cloud.",
 start:"Prenons un SelfUs !",step:"Selfie 1 / 2",heading:"L’un de vous se place face à la caméra",guide:"Aligne tes yeux et ton nez sur les repères",
 permission:"Autorise l’accès à la caméra lorsque ton navigateur le demande",take:"Je prends mon selfie",retake:"Je reprends mon selfie",next:"Passons au selfie 2 →",overlay:"Superposition du premier selfie",retry:"Réessayer la caméra",
-outhead:"Voici votre SelfUs !",outdesc:"Deux selfies. Des cases alternées. Une image commune.",resolution:"Résolution du damier",caption:"Légende (facultative)",
+outhead:"Voici votre SelfUs !",halfQuestion:"Où est ma moitié ?",outdesc:"Deux selfies. Des cases alternées. Une image commune.",resolution:"Résolution du damier",caption:"Légende (facultative)",
 placeholder:"Écrivez votre légende (facultative)…",notehelp:"Ajoutée sous la photo enregistrée.",save:"Enregistrer",share:"Partager",shareUnavailable:"Le partage direct de l’image n’est pas disponible ici. Enregistrez votre SelfUs puis partagez-le depuis vos photos.",shareFailed:"Impossible de partager cette image. Réessayez.",
-contact:"Une question, une suggestion ou envie de partager votre expérience ?",
+contact:"Une remarque ?",
 secondHeading:"C’est au tour de l’autre de prendre le smartphone",secondGuide:"Place-toi au même endroit. Utilise la superposition pour aligner ton visage sur le selfie 1",
 firstCaptured:"Premier selfie pris. Tu peux le reprendre ou passer à l’étape suivante.",secondCaptured:"Second selfie pris.",
 create:"Découvrons notre SelfUs !",cameraNotReady:"La caméra n’est pas encore prête.",captureFailed:"Échec de la prise de vue : ",
@@ -319,13 +321,13 @@ copyright:"© 2026 SelfUs.art — Todos los derechos reservados.",
  saveOptionsTitle:"Guardar tu SelfUs",saveCaptioned:"Con leyenda",saveSquare:"Formato cuadrado",exampleCaption:"Tu leyenda",saveExplain:"El formato cuadrado está preparado para imprimirlo posteriormente con una impresora instantánea compatible.",backToSelfus:"← Volver al SelfUs",
  title:"SelfUs.art — Dos personas. Dos selfies. Un SelfUs.",
  tagline:"Dos personas. Dos selfies. Un SelfUs.",taglineFirst:"Dos personas. Dos selfies.",taglineSecond:"Un SelfUs",intro1:"Los dos selfies se toman con este teléfono en el mismo lugar.",
- intro2:"SelfUs.art los combinará en un patrón de damero, alternando las casillas de uno y otro. No se inventa nada. No fake, only us.",
+ intro2:"SelfUs.art los combinará en un patrón de damero, alternando las casillas de uno y otro, de modo que cada persona aporta la mitad de la imagen final. No se inventa nada. No fake, only us.",
  fun:"¡Diviértanse libremente!",assurance:"No AI. No morphing. No import. No cloud.",
  start:"¡Tomemos un SelfUs!",step:"Selfie 1 / 2",heading:"Uno de los dos se coloca frente a la cámara",guide:"Alinea tus ojos y tu nariz con las guías",
  permission:"Permite que el navegador acceda a la cámara cuando te lo solicite",take:"Me hago mi selfie",retake:"Repito mi selfie",next:"Pasemos al selfie 2 →",overlay:"Superposición del primer selfie",retry:"Volver a probar la cámara",
- outhead:"¡Aquí está el SelfUs!",outdesc:"Dos selfies. Casillas alternadas. Una imagen compartida.",resolution:"Resolución del damero",caption:"Leyenda (opcional)",
+ outhead:"¡Aquí está el SelfUs!",halfQuestion:"¿Dónde está mi otra mitad?",outdesc:"Dos selfies. Casillas alternadas. Una imagen compartida.",resolution:"Resolución del damero",caption:"Leyenda (opcional)",
  placeholder:"Escriban su leyenda (opcional)…",notehelp:"Se añadirá debajo de la foto guardada.",save:"Guardar",share:"Compartir",shareUnavailable:"Este navegador no permite compartir directamente la imagen. Guarda tu SelfUs y compártelo desde tus fotos.",shareFailed:"No se pudo compartir esta imagen. Inténtalo de nuevo.",
- contact:"¿Preguntas, sugerencias o ganas de compartir tu experiencia?",
+ contact:"¿Algún comentario?",
  secondHeading:"Ahora le toca a la otra persona tomar el teléfono",secondGuide:"Colócate en el mismo lugar. Usa la superposición para alinear tu rostro con el selfie 1",
  firstCaptured:"Primer selfie tomado. Puedes repetirlo o pasar al siguiente paso.",secondCaptured:"Segundo selfie tomado.",
  create:"¡Descubramos nuestro SelfUs!",cameraNotReady:"La cámara todavía no está lista.",captureFailed:"No se pudo tomar la foto: ",
