@@ -206,8 +206,8 @@ header,.panel,.capture-header,.intro-explanation,.intro-assurance,.intro-privacy
 /* Compact, one-line brand and language selector. */
 
 .site-header{position:relative;display:flex;align-items:center;justify-content:flex-end;min-height:65px;gap:7px;text-align:left}
-.site-header h1{position:absolute;top:0;left:calc(50% - 12px);transform:translateX(-50%);min-width:0;margin:12px 0 0;font-size:clamp(36px,10.5vw,52px);letter-spacing:-.058em}
-.language-menu{position:absolute;right:0;top:clamp(30px,10.5vw,49px);margin:0;z-index:20}
+.site-header h1{position:absolute;bottom:0;left:calc(50% - 12px);transform:translateX(-50%);min-width:0;margin:0;font-size:clamp(36px,10.5vw,52px);letter-spacing:-.058em}
+.language-menu{position:absolute;right:0;bottom:0;margin:0;z-index:20}
 .language-trigger,.language-options button{font-family:inherit;color:#f4f7ff;background:#223247;border:0;border-radius:6px;cursor:pointer;font-size:12px;font-weight:750;min-height:25px;min-width:34px;padding:0 4px}
 .language-trigger:focus-visible,.language-options button:focus-visible{outline:2px solid #f4f7ff;outline-offset:2px}
 .language-options{position:absolute;right:0;top:100%;min-width:34px;padding:2px 0;display:flex;flex-direction:column;gap:0;background:#223247;border:1px solid #34465b;border-radius:7px;box-shadow:0 6px 15px #0006}
@@ -216,12 +216,9 @@ header,.panel,.capture-header,.intro-explanation,.intro-assurance,.intro-privacy
 .language-options button:hover,.language-options button:focus-visible{background:#34465b}
 @media(max-width:350px){.site-header h1{font-size:clamp(32px,10vw,38px)}}
 
-/* Output uses its existing translated title in the masthead, beside the language selector. */
-.site-header.composition-header h1{font-size:clamp(19px,5.5vw,26px);letter-spacing:-.025em;white-space:nowrap;max-width:calc(100% - 48px);}
+/* The output heading shares the brand heading's position and lower alignment. */
+.site-header.composition-header h1{font-size:clamp(23px,6.8vw,32px);letter-spacing:-.025em;white-space:nowrap;max-width:calc(100% - 46px);}
 .site-header.composition-header h1 .us{color:#EFFF00;}
-/* Align the language button with the lower edge of the composition title. */
-.site-header.composition-header .language-menu{top:clamp(10px,5.5vw,19px)}
-@media(max-width:350px){.site-header:not(.composition-header) .language-menu{top:clamp(24px,10vw,33px)}}
 </style></head><body><main>
 <header class="site-header"><h1 id="pageHeading" aria-label="SelfUs.art">Self<span>Us</span><span class="brand-domain">.art</span></h1><nav class="language-menu" aria-label="Langue / Language / Idioma"><button type="button" id="languageTrigger" class="language-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="languageOptions" aria-label="Choose language: English">EN</button><div id="languageOptions" class="language-options" role="group" aria-label="Langue / Language / Idioma" hidden><button type="button" id="langEN" lang="en" aria-label="English">EN</button><button type="button" id="langFR" lang="fr" aria-label="Français">FR</button><button type="button" id="langES" lang="es" aria-label="Español">ES</button></div></nav></header>
 <section id="intro" class="panel">
