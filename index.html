@@ -216,9 +216,13 @@ header,.panel,.capture-header,.intro-explanation,.intro-assurance,.intro-privacy
 .language-options button:hover,.language-options button:focus-visible{background:#34465b}
 @media(max-width:350px){.site-header h1{font-size:clamp(32px,10vw,38px)}}
 
+/* Match the home screen's vertical gap below the shared header. */
+#output{margin-top:20px}
+@media(max-width:420px){#output{margin-top:12px}}
+
 /* The output heading shares the brand heading's position and lower alignment. */
 .site-header.composition-header h1{font-size:clamp(23px,6.8vw,32px);letter-spacing:-.025em;white-space:nowrap;max-width:calc(100% - 46px);}
-.site-header.composition-header h1 .us{color:#EFFF00;}
+.site-header.composition-header h1 .us{color:#FF6A00;}
 </style></head><body><main>
 <header class="site-header"><h1 id="pageHeading" aria-label="SelfUs.art">Self<span>Us</span><span class="brand-domain">.art</span></h1><nav class="language-menu" aria-label="Langue / Language / Idioma"><button type="button" id="languageTrigger" class="language-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="languageOptions" aria-label="Choose language: English">EN</button><div id="languageOptions" class="language-options" role="group" aria-label="Langue / Language / Idioma" hidden><button type="button" id="langEN" lang="en" aria-label="English">EN</button><button type="button" id="langFR" lang="fr" aria-label="Français">FR</button><button type="button" id="langES" lang="es" aria-label="Español">ES</button></div></nav></header>
 <section id="intro" class="panel">
