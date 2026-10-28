@@ -229,6 +229,21 @@ header,.panel,.capture-header,.intro-explanation,.intro-assurance,.intro-privacy
 /* The output heading shares the brand heading's position and lower alignment. */
 .site-header.composition-header h1{font-size:clamp(23px,6.8vw,32px);letter-spacing:-.025em;white-space:nowrap;max-width:calc(100% - 46px);}
 .site-header.composition-header h1 .us{color:#FF6A00;}
+
+/* Compact, consistent back navigation: icon left, forward action right. */
+.capture-controls{grid-template-columns:46px minmax(0,1fr);align-items:stretch;column-gap:10px}
+.capture-controls #take{grid-column:1/-1;width:100%}
+.capture-controls #retake{grid-column:1;grid-row:1;order:initial;justify-self:stretch;width:46px;height:46px;min-height:46px;padding:0;display:inline-flex;align-items:center;justify-content:center;background:#29394D;border:1px solid #71859a;border-radius:11px;color:#fff}
+.capture-controls #next{grid-column:2;grid-row:1;order:initial;min-width:0;width:100%;min-height:46px}
+.capture-controls #retake svg,#saveOptions .save-back svg{display:block;flex-shrink:0}
+#saveOptions .save-back{display:flex;align-items:center;justify-content:center;width:46px;min-width:46px;height:46px;min-height:46px;padding:0;margin-right:auto;background:#29394D;border:1px solid #71859a;border-radius:11px;color:#fff}
+/* First selfie: back to instructions beside the capture action. */
+.capture-controls #backToIntro{grid-column:1;grid-row:1;width:46px;height:46px;min-height:46px;padding:0;display:flex;align-items:center;justify-content:center;background:#29394D;border:1px solid #71859a;border-radius:11px;color:#fff}
+.capture-controls #backToIntro svg{display:block;flex-shrink:0}
+.capture-controls #take{grid-column:2;grid-row:1;min-width:0;width:100%;min-height:46px}
+.capture-controls #backToIntro.hidden + #take{grid-column:1/-1}
+/* Export screen: isolated back arrow is centered. */
+#saveOptions .save-back{margin-left:auto;margin-right:auto}
 </style></head><body><main>
 <header class="site-header"><h1 id="pageHeading" aria-label="SelfUs.art">Self<span>Us</span><span class="brand-domain">.art</span></h1><nav class="language-menu" aria-label="Langue / Language / Idioma"><button type="button" id="languageTrigger" class="language-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="languageOptions" aria-label="Choose language: English">EN</button><div id="languageOptions" class="language-options" role="group" aria-label="Langue / Language / Idioma" hidden><button type="button" id="langEN" lang="en" aria-label="English">EN</button><button type="button" id="langFR" lang="fr" aria-label="Français">FR</button><button type="button" id="langES" lang="es" aria-label="Español">ES</button></div></nav></header>
 <section id="intro" class="panel">
@@ -242,7 +257,7 @@ header,.panel,.capture-header,.intro-explanation,.intro-assurance,.intro-privacy
 <div class="capture-header"><div class="eyebrow" id="step" data-i18n="step">Selfie 1 / 2</div><h2 id="heading" data-i18n="heading">One of you faces the camera</h2><p class="camera-permission hidden" id="cameraPermission" role="status" data-i18n="permission">Allow your browser to access the camera when prompted</p></div>
 <div class="stage"><video id="camera" autoplay muted playsinline webkit-playsinline></video><canvas id="live" width="720" height="720"></canvas><canvas id="frozen" class="hidden" width="720" height="720"></canvas><canvas id="ghost" width="720" height="720"></canvas></div>
 <p class="hint capture-guide" id="guide" data-i18n="guide">Align your eyes and nose with the guides</p>
-<div class="controls capture-controls"><button id="take" type="button" data-i18n="take">I'll take my selfie</button><button id="retake" type="button" class="secondary hidden" data-i18n="retake"><svg aria-hidden="true" class="retake-icon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11a9 9 0 1 1 2.7 6.4"/><path d="M3 4v7h7"/></svg> I'll retake my selfie</button><button id="next" type="button" class="hidden" data-i18n="next">Let's move to selfie 2 →</button></div>
+<div class="controls capture-controls"><button id="backToIntro" type="button" class="secondary" aria-label="Back to home" title="Back to home"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button><button id="take" type="button" data-i18n="take">I'll take my selfie</button><button id="retake" type="button" class="secondary hidden" aria-label="Retake selfie" title="Retake selfie"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11a9 9 0 1 1 2.6 6.4"/><path d="M3 4v7h7"/></svg></button><button id="next" type="button" class="hidden" data-i18n="next">Let's move to selfie 2 →</button></div>
 <p class="status" id="status" role="status"></p><div id="retryWrap" class="controls hidden"><button id="retryCamera" type="button" data-i18n="retry">Try camera again</button></div>
 </section>
 <section id="output" class="panel hidden"><canvas id="result" class="result" width="720" height="720"></canvas><p class="hint" data-i18n="resolution">Checkerboard resolution</p><div id="resolutions" class="resolutions"></div>
@@ -271,7 +286,7 @@ header,.panel,.capture-header,.intro-explanation,.intro-assurance,.intro-privacy
  </div>
 </div>
 <p class="save-explain" data-i18n="saveExplain">The square format is intended for later printing with a compatible instant photo printer.</p>
-<button type="button" id="backToSelfus" class="secondary save-back" data-i18n="backToSelfus">← Back to SelfUs</button>
+<button type="button" id="backToSelfus" class="secondary save-back" aria-label="Back to SelfUs" title="Back to SelfUs"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
 </section>
 </main>
 <footer class="copyright-footer" data-i18n="copyright">© 2026 SelfUs.art — All rights reserved.</footer>
@@ -280,7 +295,7 @@ header,.panel,.capture-header,.intro-explanation,.intro-assurance,.intro-privacy
 const I18N={
 en:{
 copyright:"© 2026 SelfUs.art — All rights reserved.",
- saveOptionsTitle:"Save your SelfUs",saveCaptioned:"With caption",saveSquare:"Square format",exampleCaption:"Your caption",saveExplain:"The square format is prepared for later printing with a compatible instant photo printer.",backToSelfus:"← Back to SelfUs",
+ saveOptionsTitle:"Save your SelfUs",saveCaptioned:"With caption",saveSquare:"Square format",exampleCaption:"Your caption",saveExplain:"The square format is prepared for later printing with a compatible instant photo printer.",backToSelfus:"← Back to SelfUs",backHome:"Back to home",
 title:"SelfUs.art — Two people. Two selfies. One SelfUs.",tagline:"Two people. Two selfies. One SelfUs.",taglineFirst:"Two people. Two selfies.",taglineSecond:"One SelfUs",intro1:"Both selfies are taken with this smartphone in the same spot.",
 intro2:"SelfUs.art will combine them in a checkerboard pattern, alternating squares from both selfies, so each person contributes half of the final image. Nothing is invented. No fake, only us.",
 fun:"Play freely!",assurance:"No AI. No morphing. No imports. No cloud.",
@@ -290,16 +305,16 @@ outhead:"Here's your SelfUs!",halfQuestion:"Where is my other half?",outdesc:"Tw
 placeholder:"Write your caption (optional)…",notehelp:"Added under the saved photo.",save:"Save",share:"Share",shareUnavailable:"Direct image sharing is not supported by this browser. You can save your SelfUs and share it from your photos.",shareFailed:"Unable to share this image. Please try again.",
 contact:"Any feedback?",
 secondHeading:"It’s the other person’s turn to take the smartphone",secondGuide:"Stand in the same spot. Use the overlay to align your face with selfie 1",
-firstCaptured:"First selfie captured. Retake or continue to the next step.",secondCaptured:"Second selfie captured.",
+firstCaptured:"First selfie captured. Retake or continue to the next step.",secondCaptured:"Second selfie captured. Retake or continue to the next step.",
 create:"Let's discover our SelfUs!",cameraNotReady:"Camera is not ready yet.",captureFailed:"Capture failed: ",
-cameraReady:"Live camera ready. Tap to capture.",cameraHTTPS:"Camera access requires HTTPS and a supported browser.",
+cameraHTTPS:"Camera access requires HTTPS and a supported browser.",
 cameraVideo:"Camera video not ready",cameraBlocked:"Camera access is blocked. Enable camera access for your browser in your phone settings, then try again.",
 cameraUnable:"Unable to start the camera: ",imageFailed:"Unable to create the image. Please try again.",
 madeWith:"Taken with ",onDate:" on ",locale:"en-GB"
 },
 fr:{
 copyright:"© 2026 SelfUs.art — Tous droits réservés.",
- saveOptionsTitle:"Enregistrer votre SelfUs",saveCaptioned:"Avec légende",saveSquare:"Format carré",exampleCaption:"Votre légende",saveExplain:"Le format carré est destiné à une impression ultérieure sur une imprimante instantanée compatible.",backToSelfus:"← Retour au SelfUs",
+ saveOptionsTitle:"Enregistrer votre SelfUs",saveCaptioned:"Avec légende",saveSquare:"Format carré",exampleCaption:"Votre légende",saveExplain:"Le format carré est destiné à une impression ultérieure sur une imprimante instantanée compatible.",backToSelfus:"← Retour au SelfUs",backHome:"Retour à l’accueil",
 tagline:"Deux personnes. Deux selfies. Un SelfUs.",taglineFirst:"Deux personnes. Deux selfies.",taglineSecond:"Un SelfUs",intro1:"Les deux selfies sont pris avec ce smartphone, au même endroit.",
 intro2:"SelfUs.art les combinera en damier, en alternant les cases de l’un et de l’autre, chacun contribuant ainsi pour moitié à l’image finale. Rien n’est inventé. No fake, only us.",
 fun:"Amusez-vous librement !",assurance:"No AI. No morphing. No import. No cloud.",
@@ -309,16 +324,16 @@ outhead:"Voici votre SelfUs !",halfQuestion:"Où est ma moitié ?",outdesc:"Deux
 placeholder:"Écrivez votre légende (facultative)…",notehelp:"Ajoutée sous la photo enregistrée.",save:"Enregistrer",share:"Partager",shareUnavailable:"Le partage direct de l’image n’est pas disponible ici. Enregistrez votre SelfUs puis partagez-le depuis vos photos.",shareFailed:"Impossible de partager cette image. Réessayez.",
 contact:"Une remarque ?",
 secondHeading:"C’est au tour de l’autre de prendre le smartphone",secondGuide:"Place-toi au même endroit. Utilise la superposition pour aligner ton visage sur le selfie 1",
-firstCaptured:"Premier selfie pris. Tu peux le reprendre ou passer à l’étape suivante.",secondCaptured:"Second selfie pris.",
+firstCaptured:"Premier selfie pris. Tu peux le reprendre ou passer à l’étape suivante.",secondCaptured:"Deuxième selfie pris. Tu peux le reprendre ou passer à l’étape suivante.",
 create:"Découvrons notre SelfUs !",cameraNotReady:"La caméra n’est pas encore prête.",captureFailed:"Échec de la prise de vue : ",
-cameraReady:"Caméra prête. Appuie pour prendre la photo.",cameraHTTPS:"L’accès à la caméra nécessite HTTPS et un navigateur compatible.",
+cameraHTTPS:"L’accès à la caméra nécessite HTTPS et un navigateur compatible.",
 cameraVideo:"L’image de la caméra n’est pas prête",cameraBlocked:"L’accès à la caméra est bloqué. Autorise-le dans les réglages de ton téléphone, puis réessaie.",
 cameraUnable:"Impossible de démarrer la caméra : ",imageFailed:"Impossible de créer l’image. Réessaie.",
 madeWith:"Pris avec ",onDate:" le ",locale:"fr-FR",title:"SelfUs.art — Deux personnes. Deux selfies. Un SelfUs."
 },
 es:{
 copyright:"© 2026 SelfUs.art — Todos los derechos reservados.",
- saveOptionsTitle:"Guardar tu SelfUs",saveCaptioned:"Con leyenda",saveSquare:"Formato cuadrado",exampleCaption:"Tu leyenda",saveExplain:"El formato cuadrado está preparado para imprimirlo posteriormente con una impresora instantánea compatible.",backToSelfus:"← Volver al SelfUs",
+ saveOptionsTitle:"Guardar tu SelfUs",saveCaptioned:"Con leyenda",saveSquare:"Formato cuadrado",exampleCaption:"Tu leyenda",saveExplain:"El formato cuadrado está preparado para imprimirlo posteriormente con una impresora instantánea compatible.",backToSelfus:"← Volver al SelfUs",backHome:"Volver al inicio",
  title:"SelfUs.art — Dos personas. Dos selfies. Un SelfUs.",
  tagline:"Dos personas. Dos selfies. Un SelfUs.",taglineFirst:"Dos personas. Dos selfies.",taglineSecond:"Un SelfUs",intro1:"Los dos selfies se toman con este teléfono en el mismo lugar.",
  intro2:"SelfUs.art los combinará en un patrón de damero, alternando las casillas de uno y otro, de modo que cada persona aporta la mitad de la imagen final. No se inventa nada. No fake, only us.",
@@ -329,9 +344,9 @@ copyright:"© 2026 SelfUs.art — Todos los derechos reservados.",
  placeholder:"Escriban su leyenda (opcional)…",notehelp:"Se añadirá debajo de la foto guardada.",save:"Guardar",share:"Compartir",shareUnavailable:"Este navegador no permite compartir directamente la imagen. Guarda tu SelfUs y compártelo desde tus fotos.",shareFailed:"No se pudo compartir esta imagen. Inténtalo de nuevo.",
  contact:"¿Algún comentario?",
  secondHeading:"Ahora le toca a la otra persona tomar el teléfono",secondGuide:"Colócate en el mismo lugar. Usa la superposición para alinear tu rostro con el selfie 1",
- firstCaptured:"Primer selfie tomado. Puedes repetirlo o pasar al siguiente paso.",secondCaptured:"Segundo selfie tomado.",
+ firstCaptured:"Primer selfie tomado. Puedes repetirlo o pasar al siguiente paso.",secondCaptured:"Segundo selfie tomado. Puedes repetirlo o pasar al siguiente paso.",
  create:"¡Descubramos nuestro SelfUs!",cameraNotReady:"La cámara todavía no está lista.",captureFailed:"No se pudo tomar la foto: ",
- cameraReady:"Cámara lista. Pulsa el botón para hacer la foto.",cameraHTTPS:"Para acceder a la cámara se necesita HTTPS y un navegador compatible.",
+ cameraHTTPS:"Para acceder a la cámara se necesita HTTPS y un navegador compatible.",
  cameraVideo:"La imagen de la cámara todavía no está lista.",cameraBlocked:"El acceso a la cámara está bloqueado. Actívalo en los ajustes del teléfono y vuelve a intentarlo.",
  cameraUnable:"No se pudo iniciar la cámara: ",imageFailed:"No se pudo crear la imagen. Inténtalo de nuevo.",
  madeWith:"Tomado con ",onDate:" el ",locale:"es-ES"
@@ -413,10 +428,13 @@ function setLanguage(next){
   if(key==='retake'){const textNode=[...node.childNodes].find(n=>n.nodeType===3);if(textNode)textNode.textContent=' '+tr(key);}
   else renderTranslatedText(node,tr(key));
  }
+  const backHome=el('backToIntro');if(backHome){backHome.setAttribute('aria-label',tr('backHome'));backHome.title=tr('backHome');}
+  for(const [id,key] of [['retake','retake'],['backToSelfus','backToSelfus']]){const button=document.getElementById(id);if(button){button.setAttribute('aria-label',tr(key).replace(/^←\s*/,''));button.title=tr(key).replace(/^←\s*/,'');}}
  for(const node of document.querySelectorAll('[data-i18n-placeholder]'))node.placeholder=tr(node.dataset.i18nPlaceholder);
   if(!document.getElementById('output').classList.contains('hidden'))updatePageHeading(true);
  if(document.getElementById('capture')&&!document.getElementById('capture').classList.contains('hidden')){
   ui();
+  if(taken) message(phase===0?tr('firstCaptured'):tr('secondCaptured'));
   const nextBtn=document.getElementById('next');
   if(!nextBtn.classList.contains('hidden'))nextBtn.textContent=phase===1?tr('create'):tr('next');
  }
@@ -535,6 +553,7 @@ function ui(){
  el('guide').classList.toggle('hidden',taken);
  el('take').textContent=tr('take');
  el('take').classList.toggle('hidden',taken);
+ el('backToIntro').classList.toggle('hidden',phase!==0||taken);
  el('retake').classList.toggle('hidden',!taken);
  el('next').classList.toggle('hidden',!taken);
  el('next').textContent=phase===0?tr('next'):tr('create');
@@ -558,7 +577,7 @@ async function next(){
  if(phase===0){phase=1;taken=false;el('next').textContent=tr('next');ui();message('');}
  else if(shots[0]&&shots[1]){stop();compose();display('output')}
 }
-async function retake(){shots[phase]=null;taken=false;el('next').classList.add('hidden');ui();if(!stream)await cameraStart();else message(tr('cameraReady'))}
+async function retake(){shots[phase]=null;taken=false;el('next').classList.add('hidden');ui();if(!stream)await cameraStart();else message('')}
 function compose(){
  const a=shots[0].getContext('2d').getImageData(0,0,SIZE,SIZE).data;
  const b=shots[1].getContext('2d').getImageData(0,0,SIZE,SIZE).data;
@@ -572,6 +591,7 @@ function compose(){
 }
 el('start').addEventListener('click',begin);
 el('retryCamera').addEventListener('click',cameraStart);
+el('backToIntro').addEventListener('click',()=>{if(phase!==0||taken)return;stop();display('intro');message('');window.scrollTo(0,0)});
 el('take').addEventListener('click',capture);
 el('retake').addEventListener('click',retake);
 el('next').addEventListener('click',next);
