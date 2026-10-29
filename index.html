@@ -289,10 +289,26 @@ main{padding-bottom:38px}
 .intro-slogan{color:#EFFF00;font-size:clamp(21px,5.4vw,25px);font-weight:700;line-height:1.35;text-align:center;margin:20px 0 12px}
 .intro-slogan .orange-us{color:#FF6A00}
 .intro-assurance .sharing-line{display:block;white-space:nowrap;margin-top:4px}
+
+/* Édition spéciale Les Utopiales 2026 — accueil uniquement. */
+.utopiales-edition{
+  text-align:center;
+  padding:9px 7px 11px;
+  margin:0 0 14px;
+  border-bottom:1px solid #435068;
+}
+.utopiales-name{color:#00B81F;font-size:clamp(20px,5.6vw,26px);font-weight:800;line-height:1.2;margin-top:4px}
+.utopiales-name a{color:inherit;text-decoration:none}
+.utopiales-name a:hover,.utopiales-name a:focus-visible{text-decoration:underline;text-underline-offset:3px}
+
+
 </style></head><body><main>
 <header class="site-header"><h1 id="pageHeading" aria-label="SelfUs.art">Self<span>Us</span><span class="brand-domain">.art</span></h1><nav class="language-menu" aria-label="Langue / Language / Idioma"><button type="button" id="languageTrigger" class="language-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="languageOptions" aria-label="Choose language: English">EN</button><div id="languageOptions" class="language-options" role="group" aria-label="Langue / Language / Idioma" hidden><button type="button" id="langEN" lang="en" aria-label="English">EN</button><button type="button" id="langFR" lang="fr" aria-label="Français">FR</button><button type="button" id="langES" lang="es" aria-label="Español">ES</button></div></nav></header>
 <section id="intro" class="panel">
-<p class="intro-encouragement intro-tagline"><span class="tagline-line" data-i18n="taglineFirst">Two people. Two selfies.</span><span class="tagline-line" data-i18n="taglineSecond">One Self<span class="us">Us</span></span></p>
+<div class="utopiales-edition" aria-label="Les Utopiales 2026">
+  <div class="utopiales-name"><a href="https://www.utopiales.org/" target="_blank" rel="noopener noreferrer" aria-label="Site officiel des Utopiales" data-i18n="utopialesName">Les Utopiales</a><span data-i18n="utopialesNow">, c’est maintenant !</span></div>
+</div>
+<p class="intro-encouragement intro-tagline"><span class="tagline-line" data-i18n="taglineFirst">Two people, two selfies.</span><span class="tagline-line" data-i18n="taglineSecond">One utopia, one Self<span class="us">Us</span>.</span></p>
 <p class="intro-explanation" data-i18n="intro1">To help align them, both selfies are taken with this smartphone in the same spot.</p>
 <p class="intro-explanation"><span data-i18n="intro2">Self<span class="us">Us</span>.art will combine them in a checkerboard pattern, alternating squares from both selfies. Nothing is invented.</span></p>
 <p class="intro-slogan">No fake, only <span class="orange-us">us</span></p>
@@ -347,10 +363,10 @@ main{padding-bottom:38px}
 <script>
 (()=>{'use strict';
 const I18N={
-en:{
+en:{utopialesName:"Les Utopiales",utopialesNow:", happening now!", 
 copyright:"© 2026 SelfUs.art — All rights reserved.",
  saveOptionsTitle:"Save your SelfUs",saveCaptioned:"With caption",saveSquare:"Square format",exampleCaption:"Your caption",saveExplain:"The square format is prepared for later printing with a compatible instant photo printer.",backToSelfus:"← Back to SelfUs",backHome:"Back to home",restartHomeLabel:"Back to home — start a new SelfUs",restartHomeConfirm:"Start a new SelfUs? The two selfies will be discarded.",restartCancel:"Cancel",restartConfirmAction:"Restart",
-title:"SelfUs.art — Two people. Two selfies. One SelfUs.",tagline:"Two people. Two selfies. One SelfUs.",taglineFirst:"Two people. Two selfies.",taglineSecond:"One SelfUs",intro1:"Both selfies are taken with this smartphone in the same spot.",
+title:"SelfUs.art — Two people. Two selfies. One SelfUs.",tagline:"Two people. Two selfies. One SelfUs.",taglineFirst:"Two people, two selfies.",taglineSecond:"One utopia, one SelfUs.",intro1:"Both selfies are taken with this smartphone in the same spot.",
 intro2:"SelfUs.art will combine them in a checkerboard pattern, alternating squares from both selfies, so each person contributes half of the final image. Nothing is invented.",
 fun:"Play freely!",assurance:"AI? No. Morphing? No. Imports? No. Sharing? Why not?",
 start:"Take a SelfUs!",step:"Selfie 1",heading:"One of you faces the camera",guide:"Align your eyes and nose with the guides",
@@ -364,12 +380,12 @@ create:"Let's discover our SelfUs! →",cameraNotReady:"Camera is not ready yet.
 cameraHTTPS:"Camera access requires HTTPS and a supported browser.",
 cameraVideo:"Camera video not ready",cameraBlocked:"Camera access is blocked. Enable camera access for your browser in your phone settings, then try again.",
 cameraUnable:"Unable to start the camera: ",imageFailed:"Unable to create the image. Please try again.",
-madeWith:"Taken with ",onDate:" on ",locale:"en-GB"
+madeWith:"Utopia by ",onDate:" — ",locale:"en-GB"
 },
-fr:{
+fr:{utopialesName:"Les Utopiales",utopialesNow:", c’est maintenant !", 
 copyright:"© 2026 SelfUs.art — Tous droits réservés.",
  saveOptionsTitle:"Enregistrer votre SelfUs",saveCaptioned:"Avec légende",saveSquare:"Format carré",exampleCaption:"Votre légende",saveExplain:"Le format carré est destiné à une impression ultérieure sur une imprimante instantanée compatible.",backToSelfus:"← Retour au SelfUs",backHome:"Retour à l’accueil",restartHomeLabel:"Retour à l’accueil — recommencer un SelfUs",restartHomeConfirm:"Recommencer un SelfUs ? Les deux selfies seront abandonnés.",restartCancel:"Annuler",restartConfirmAction:"Recommencer",
-tagline:"Deux personnes. Deux selfies. Un SelfUs.",taglineFirst:"Deux personnes. Deux selfies.",taglineSecond:"Un SelfUs",intro1:"Les deux selfies sont pris avec ce smartphone, au même endroit.",
+tagline:"Deux personnes. Deux selfies. Un SelfUs.",taglineFirst:"Deux personnes, deux selfies.",taglineSecond:"Une utopie, un SelfUs.",intro1:"Les deux selfies sont pris avec ce smartphone, au même endroit.",
 intro2:"SelfUs.art les combinera en damier, en alternant les cases de l’un et de l’autre, chacun contribuant ainsi pour moitié à l’image finale. Rien n’est inventé.",
 fun:"Amusez-vous librement !",assurance:"AI? No. Morphing? No. Imports? No. Sharing? Why not?",
 start:"Prenons un SelfUs !",step:"Selfie 1",heading:"L’un de vous se place face à la caméra",guide:"Aligne tes yeux et ton nez sur les repères",
@@ -383,13 +399,13 @@ create:"Découvrons notre SelfUs ! →",cameraNotReady:"La caméra n’est pas e
 cameraHTTPS:"L’accès à la caméra nécessite HTTPS et un navigateur compatible.",
 cameraVideo:"L’image de la caméra n’est pas prête",cameraBlocked:"L’accès à la caméra est bloqué. Autorise-le dans les réglages de ton téléphone, puis réessaie.",
 cameraUnable:"Impossible de démarrer la caméra : ",imageFailed:"Impossible de créer l’image. Réessaie.",
-madeWith:"Pris avec ",onDate:" le ",locale:"fr-FR",title:"SelfUs.art — Deux personnes. Deux selfies. Un SelfUs."
+madeWith:"Utopia by ",onDate:" — ",locale:"en-GB",title:"SelfUs.art — Deux personnes. Deux selfies. Un SelfUs."
 },
-es:{
+es:{utopialesName:"Les Utopiales",utopialesNow:", ¡ya están aquí!", 
 copyright:"© 2026 SelfUs.art — Todos los derechos reservados.",
  saveOptionsTitle:"Guardar tu SelfUs",saveCaptioned:"Con leyenda",saveSquare:"Formato cuadrado",exampleCaption:"Tu leyenda",saveExplain:"El formato cuadrado está preparado para imprimirlo posteriormente con una impresora instantánea compatible.",backToSelfus:"← Volver al SelfUs",backHome:"Volver al inicio",restartHomeLabel:"Volver al inicio — empezar un nuevo SelfUs",restartHomeConfirm:"¿Empezar un nuevo SelfUs? Se descartarán los dos selfis.",restartCancel:"Cancelar",restartConfirmAction:"Reiniciar",
  title:"SelfUs.art — Dos personas. Dos selfies. Un SelfUs.",
- tagline:"Dos personas. Dos selfies. Un SelfUs.",taglineFirst:"Dos personas. Dos selfies.",taglineSecond:"Un SelfUs",intro1:"Los dos selfies se toman con este teléfono en el mismo lugar.",
+ tagline:"Dos personas. Dos selfies. Un SelfUs.",taglineFirst:"Dos personas, dos selfis.",taglineSecond:"Una utopía, un SelfUs.",intro1:"Los dos selfies se toman con este teléfono en el mismo lugar.",
  intro2:"SelfUs.art los combinará en un patrón de damero, alternando las casillas de uno y otro, de modo que cada persona aporta la mitad de la imagen final. No se inventa nada.",
  fun:"¡Diviértanse libremente!",assurance:"AI? No. Morphing? No. Imports? No. Sharing? Why not?",
  start:"¡Tomemos un SelfUs!",step:"Selfie 1",heading:"Uno de los dos se coloca frente a la cámara",guide:"Alinea tus ojos y tu nariz con las guías",
@@ -403,7 +419,7 @@ copyright:"© 2026 SelfUs.art — Todos los derechos reservados.",
  cameraHTTPS:"Para acceder a la cámara se necesita HTTPS y un navegador compatible.",
  cameraVideo:"La imagen de la cámara todavía no está lista.",cameraBlocked:"El acceso a la cámara está bloqueado. Actívalo en los ajustes del teléfono y vuelve a intentarlo.",
  cameraUnable:"No se pudo iniciar la cámara: ",imageFailed:"No se pudo crear la imagen. Inténtalo de nuevo.",
- madeWith:"Tomado con ",onDate:" el ",locale:"es-ES"
+ madeWith:"Utopia by ",onDate:" — ",locale:"en-GB"
 }
 };
 let lang='en';
@@ -859,8 +875,7 @@ const detected=(navigator.languages?.[0] || navigator.language || 'en').toLowerC
 setLanguage(['fr','en','es'].includes(detected)?detected:'en');
 window.addEventListener('pagehide',stop);
 })();
-</script>
-<!-- Cloudflare Web Analytics -->
+</script><!-- Cloudflare Web Analytics -->
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "c0d69fc0ae6745519efceda31a487bc4"}'></script>
 <!-- End Cloudflare Web Analytics -->
 </body></html>
