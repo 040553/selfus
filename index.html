@@ -59,8 +59,8 @@ header p{margin:8px 0 0;font-size:clamp(12px,4.3vw,18px);font-weight:600;white-s
 .capture-controls #retake{justify-self:center;width:auto;min-height:40px;padding:8px 19px;font-size:14px;font-weight:600;background:transparent;color:#cbd7e3;border:1px solid #71859a;white-space:nowrap}
 .capture-controls #retake .retake-icon{display:inline-block;margin-right:6px;vertical-align:-4px;flex:none}
 .capture-controls #next{justify-self:stretch;width:100%;background:#FF6A00;color:#10212c;font-weight:750}
-/* V17: six resolutions, three equal-width buttons per row. */
-.resolutions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-width:100%;margin:0 auto}
+/* Checkerboard resolution buttons. */
+.resolutions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;max-width:100%;margin:0 auto}
 .resolutions button{width:100%;white-space:nowrap;min-width:0;padding:9px 3px;font-size:clamp(11px,3vw,13px);font-variant-numeric:tabular-nums}
 
 /* V14 — centered mobile presentation; keep the slider's label/value at opposite ends. */
@@ -869,7 +869,7 @@ el('save').addEventListener('click',openSaveOptions);
 el('saveCaptioned').addEventListener('click',()=>downloadCanvas(makePolaroid(),'SelfUs.png'));
 el('saveSquare').addEventListener('click',()=>downloadCanvas(makeSquarePrint(),'SelfUs-carre.png'));
 el('backToSelfus').addEventListener('click',()=>{display('output');window.scrollTo(0,0)});
-for(const n of [4,16,32,64,128,256]){const b=document.createElement('button');b.type='button';b.textContent=n+' × '+n;b.classList.toggle('active',n===cells);b.addEventListener('click',()=>{cells=n;el('resolutions').querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===b));if(shots[0]&&shots[1])compose()});el('resolutions').appendChild(b)}
+for(const n of [4,8,16,32,64,128,256]){const b=document.createElement('button');b.type='button';b.textContent=n+' × '+n;b.classList.toggle('active',n===cells);b.addEventListener('click',()=>{cells=n;el('resolutions').querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===b));if(shots[0]&&shots[1])compose()});el('resolutions').appendChild(b)}
 const detected=(navigator.languages?.[0] || navigator.language || 'en').toLowerCase().split('-')[0];
 setLanguage(['fr','en','es'].includes(detected)?detected:'en');
 window.addEventListener('pagehide',stop);
