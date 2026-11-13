@@ -869,7 +869,7 @@ el('save').addEventListener('click',openSaveOptions);
 el('saveCaptioned').addEventListener('click',()=>downloadCanvas(makePolaroid(),'SelfUs.png'));
 el('saveSquare').addEventListener('click',()=>downloadCanvas(makeSquarePrint(),'SelfUs-carre.png'));
 el('backToSelfus').addEventListener('click',()=>{display('output');window.scrollTo(0,0)});
-for(const n of [4,8,16,32,64,128,256]){const b=document.createElement('button');b.type='button';b.textContent=n+' × '+n;b.classList.toggle('active',n===cells);b.addEventListener('click',()=>{cells=n;el('resolutions').querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===b));if(shots[0]&&shots[1])compose()});el('resolutions').appendChild(b)}
+for(const n of [4,8,16,32,64,128,256,512]){const b=document.createElement('button');b.type='button';b.textContent=n+' × '+n;b.classList.toggle('active',n===cells);b.addEventListener('click',()=>{cells=n;el('resolutions').querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===b));if(shots[0]&&shots[1])compose()});el('resolutions').appendChild(b)}
 const detected=(navigator.languages?.[0] || navigator.language || 'en').toLowerCase().split('-')[0];
 setLanguage(['fr','en','es'].includes(detected)?detected:'en');
 window.addEventListener('pagehide',stop);
