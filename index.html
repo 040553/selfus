@@ -305,13 +305,13 @@ main{padding-bottom:38px}
 /* Logo independent from the title: prominent on the home screen only. */
 .site-header .home-heading-group{display:contents}
 .site-header #homeLogo{display:none}
-.site-header.intro-header .home-heading-group{position:absolute;left:50%;bottom:0;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;gap:9px;white-space:nowrap;max-width:calc(100% - 50px)}
-.site-header.intro-header h1{position:static;left:auto;bottom:auto;transform:none;margin:0;color:#f4f7ff;font-size:clamp(31px,9vw,46px);letter-spacing:-.058em}
+.site-header.intro-header .home-heading-group{position:relative;margin-inline:auto;display:flex;align-items:center;justify-content:center;gap:9px;white-space:nowrap;max-width:calc(100% - 50px)}
+.site-header.intro-header h1{position:static;left:auto;bottom:auto;transform:none;margin:0;color:#f4f7ff;font-size:clamp(35px,10.8vw,55px);letter-spacing:-.058em}
 .site-header.intro-header h1 span:not(.brand-domain){color:#FF6A00}
 .site-header.intro-header h1 .brand-domain{color:#bccbd8}
-.site-header.intro-header #homeLogo{display:block;width:72px;height:72px;flex:0 0 72px;object-fit:contain}
+.site-header.intro-header #homeLogo{display:block;width:86px;height:86px;flex:0 0 86px;object-fit:contain}
 #intro .intro-static-logo{display:none}
-@media(max-width:360px){.site-header.intro-header .home-heading-group{gap:6px}.site-header.intro-header #homeLogo{width:63px;height:63px;flex-basis:63px}.site-header.intro-header h1{font-size:clamp(29px,9vw,34px)}}
+@media(max-width:360px){.site-header.intro-header .home-heading-group{gap:6px}.site-header.intro-header #homeLogo{width:72px;height:72px;flex-basis:72px}.site-header.intro-header h1{font-size:clamp(33px,10.4vw,38px)}}
 </style></head><body><main>
 <header class="site-header intro-header"><div class="home-heading-group"><img id="homeLogo" alt="" aria-hidden="true"><h1 id="pageHeading" aria-label="SelfUs.art">Self<span>Us</span><span class="brand-domain">.art</span></h1></div><nav class="language-menu" aria-label="Langue / Language / Idioma / Lingua"><button type="button" id="languageTrigger" class="language-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="languageOptions" aria-label="Choose language: English">EN</button><div id="languageOptions" class="language-options" role="group" aria-label="Langue / Language / Idioma / Lingua" hidden><button type="button" id="langEN" lang="en" aria-label="English">EN</button><button type="button" id="langFR" lang="fr" aria-label="Français">FR</button><button type="button" id="langES" lang="es" aria-label="Español">ES</button><button type="button" id="langIT" lang="it" aria-label="Italiano">IT</button></div></nav></header>
 <section id="intro" class="panel">
