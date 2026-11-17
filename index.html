@@ -339,7 +339,9 @@ main{padding-bottom:38px}
   <option value="original" data-i18n="filterOriginal">Original</option>
   <option value="bw" data-i18n="filterBW">Black and white</option>
   <option value="poster" data-i18n="filterPoster">Poster</option>
+  <option value="poster_bw" data-i18n="filterPosterBW">Poster B&amp;W</option>
   <option value="comic" data-i18n="filterComic">Comics</option>
+  <option value="comic_bw" data-i18n="filterComicBW">Comics B&amp;W</option>
  </select>
 </div><input id="personalMessage" type="text" maxlength="40" placeholder="Write your caption (optional)…" data-i18n-placeholder="placeholder" autocomplete="off" aria-describedby="messageCount"><output id="messageCount" for="personalMessage" aria-live="off">0/40</output></div></div>
 <div class="controls output-actions"><button id="restartHome" type="button" class="secondary" aria-label="Return to home and start over" title="Return to home and start over"><svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M9 21v-7h6v7"/></svg></button><button id="share" type="button" class="secondary" data-i18n="share" disabled>Share</button><button id="save" type="button" data-i18n="save">Save</button></div><p id="shareStatus" class="share-status" role="status" aria-live="polite"></p>
@@ -393,7 +395,7 @@ intro2:"SelfUs.art combines the two selfies into a checkerboard portrait, with e
 fun:"Play freely!",assurance:"Free? Yes\nAI? No - Morphing? No\nSharing? Why not?",
 playInvitation:"Your turn!",start:"Take a SelfUs",step:"Selfie 1",heading:"One of you faces the camera",guide:"Align your eyes and nose with the guides",
 permission:"Allow your browser to access the camera when prompted",take:"I'll take my selfie",retake:"I'll retake my selfie",next:"Let's move to selfie 2 →",overlay:"First selfie overlay",retry:"Try camera again",
-filterTitle:"Filters",filterOriginal:"Original",filterBW:"Black and white",filterPoster:"Poster",filterComic:"Comics",outhead:"Here's your SelfUs!",halfQuestion:"Where is my other half?",outdesc:"Two selfies. Alternating squares. One shared image.",resolution:"Checkerboard resolution",caption:"Caption (optional)",
+filterTitle:"Filters",filterOriginal:"Original",filterBW:"Black and white",filterPoster:"Poster",filterPosterBW:"Poster B&W",filterComic:"Comics",filterComicBW:"Comics B&W",outhead:"Here's your SelfUs!",halfQuestion:"Where is my other half?",outdesc:"Two selfies. Alternating squares. One shared image.",resolution:"Checkerboard resolution",caption:"Caption (optional)",
 placeholder:"Write your caption (optional)…",notehelp:"Added under the saved photo.",save:"Save",share:"Share",shareUnavailable:"Direct image sharing is not supported by this browser. You can save your SelfUs and share it from your photos.",shareFailed:"Unable to share this image. Please try again.",
 contact:"Any feedback?",followWhatsapp:"Follow us on WhatsApp",
 secondHeading:"It’s the other person’s turn to take the smartphone",secondGuide:"Stand in the same spot. Use the overlay to align your face with selfie 1",
@@ -412,7 +414,7 @@ intro2:"SelfUs.art combine les deux selfies en un portrait en damier, auquel cha
 fun:"Amusez-vous librement !",assurance:"Free? Yes\nAI? No - Morphing? No\nSharing? Why not?",
 playInvitation:"À vous de jouer !",start:"Prenons un SelfUs",step:"Selfie 1",heading:"L’un de vous se place face à la caméra",guide:"Aligne tes yeux et ton nez sur les repères",
 permission:"Autorise l’accès à la caméra lorsque ton navigateur le demande",take:"Je prends mon selfie",retake:"Je reprends mon selfie",next:"Passons au selfie 2 →",overlay:"Superposition du premier selfie",retry:"Réessayer la caméra",
-filterTitle:"Filtres",filterOriginal:"Original",filterBW:"Noir et blanc",filterPoster:"Affiche",filterComic:"BD",outhead:"Voici votre SelfUs !",halfQuestion:"Où est ma moitié ?",outdesc:"Deux selfies. Des cases alternées. Une image commune.",resolution:"Résolution du damier",caption:"Légende (facultative)",
+filterTitle:"Filtres",filterOriginal:"Original",filterBW:"Noir et blanc",filterPoster:"Affiche",filterPosterBW:"Affiche N&B",filterComic:"BD",filterComicBW:"BD N&B",outhead:"Voici votre SelfUs !",halfQuestion:"Où est ma moitié ?",outdesc:"Deux selfies. Des cases alternées. Une image commune.",resolution:"Résolution du damier",caption:"Légende (facultative)",
 placeholder:"Écrivez votre légende (facultative)…",notehelp:"Ajoutée sous la photo enregistrée.",save:"Enregistrer",share:"Partager",shareUnavailable:"Le partage direct de l’image n’est pas disponible ici. Enregistrez votre SelfUs puis partagez-le depuis vos photos.",shareFailed:"Impossible de partager cette image. Réessayez.",
 contact:"Une remarque ?",followWhatsapp:"Suivez-nous sur WhatsApp",
 secondHeading:"C’est au tour de l’autre de prendre le smartphone",secondGuide:"Place-toi au même endroit. Utilise la superposition pour aligner ton visage sur le selfie 1",
@@ -432,7 +434,7 @@ copyright:"© 2026 SelfUs.art — Todos los derechos reservados.",
  fun:"¡Diviértanse libremente!",assurance:"Free? Yes\nAI? No - Morphing? No\nSharing? Why not?",
  playInvitation:"¡Les toca jugar!",start:"Tomemos un SelfUs",step:"Selfie 1",heading:"Uno de los dos se coloca frente a la cámara",guide:"Alinea tus ojos y tu nariz con las guías",
  permission:"Permite que el navegador acceda a la cámara cuando te lo solicite",take:"Me hago mi selfie",retake:"Repito mi selfie",next:"Pasemos al selfie 2 →",overlay:"Superposición del primer selfie",retry:"Volver a probar la cámara",
- filterTitle:"Filtros",filterOriginal:"Original",filterBW:"Blanco y negro",filterPoster:"Cartel",filterComic:"Cómic",outhead:"¡Aquí está el SelfUs!",halfQuestion:"¿Dónde está mi otra mitad?",outdesc:"Dos selfies. Casillas alternadas. Una imagen compartida.",resolution:"Resolución del damero",caption:"Leyenda (opcional)",
+ filterTitle:"Filtros",filterOriginal:"Original",filterBW:"Blanco y negro",filterPoster:"Cartel",filterPosterBW:"Cartel B/N",filterComic:"Cómic",filterComicBW:"Cómic B/N",outhead:"¡Aquí está el SelfUs!",halfQuestion:"¿Dónde está mi otra mitad?",outdesc:"Dos selfies. Casillas alternadas. Una imagen compartida.",resolution:"Resolución del damero",caption:"Leyenda (opcional)",
  placeholder:"Escriban su leyenda (opcional)…",notehelp:"Se añadirá debajo de la foto guardada.",save:"Guardar",share:"Compartir",shareUnavailable:"Este navegador no permite compartir directamente la imagen. Guarda tu SelfUs y compártelo desde tus fotos.",shareFailed:"No se pudo compartir esta imagen. Inténtalo de nuevo.",
  contact:"¿Algún comentario?",followWhatsapp:"Síguenos en WhatsApp",
  secondHeading:"Ahora le toca a la otra persona tomar el teléfono",secondGuide:"Colócate en el mismo lugar. Usa la superposición para alinear tu rostro con el selfie 1",
@@ -451,7 +453,7 @@ copyright:"© 2026 SelfUs.art — Todos los derechos reservados.",
  fun:"Divertitevi liberamente!",assurance:"Free? Yes\nAI? No - Morphing? No\nSharing? Why not?",
  playInvitation:"Tocca a voi!",start:"Facciamo un SelfUs",step:"Selfie 1",heading:"Uno di voi si mette davanti alla fotocamera",guide:"Allinea gli occhi e il naso alle guide",
  permission:"Consenti al browser di accedere alla fotocamera quando richiesto",take:"Scatto il mio selfie",retake:"Rifaccio il mio selfie",next:"Passiamo al selfie 2 →",overlay:"Sovrapposizione del primo selfie",retry:"Riprova con la fotocamera",
- filterTitle:"Filtri",filterOriginal:"Originale",filterBW:"Bianco e nero",filterPoster:"Manifesto",filterComic:"Fumetto",outhead:"Ecco il vostro SelfUs!",halfQuestion:"Dov’è la mia metà?",outdesc:"Due selfie. Riquadri alternati. Un’unica immagine condivisa.",resolution:"Risoluzione della scacchiera",caption:"Didascalia (facoltativa)",
+ filterTitle:"Filtri",filterOriginal:"Originale",filterBW:"Bianco e nero",filterPoster:"Manifesto",filterPosterBW:"Manifesto B/N",filterComic:"Fumetto",filterComicBW:"Fumetto B/N",outhead:"Ecco il vostro SelfUs!",halfQuestion:"Dov’è la mia metà?",outdesc:"Due selfie. Riquadri alternati. Un’unica immagine condivisa.",resolution:"Risoluzione della scacchiera",caption:"Didascalia (facoltativa)",
  placeholder:"Scrivi una didascalia (facoltativa)…",notehelp:"Aggiunta sotto la foto salvata.",save:"Salva",share:"Condividi",shareUnavailable:"Questo browser non supporta la condivisione diretta dell’immagine. Salva il tuo SelfUs e condividilo dalla galleria delle foto.",shareFailed:"Impossibile condividere l’immagine. Riprova.",
  contact:"Hai un suggerimento?",followWhatsapp:"Seguici su WhatsApp",
  secondHeading:"Ora tocca all’altra persona prendere lo smartphone",secondGuide:"Mettiti nello stesso punto. Usa la sovrapposizione per allineare il viso al selfie 1",
@@ -733,7 +735,8 @@ function comicPixels(canvas){
 }
 function compose(){
  const filter=el('selfusFilter').value;
- const pixels=shot=>filter==='comic'?comicPixels(shot):shot.getContext('2d').getImageData(0,0,SIZE,SIZE).data;
+ const pixels=shot=>(filter==='comic'||filter==='comic_bw')
+  ?comicPixels(shot):shot.getContext('2d').getImageData(0,0,SIZE,SIZE).data;
  const a=pixels(shots[0]),b=pixels(shots[1]);
  const ctx=result.getContext('2d'),out=ctx.createImageData(SIZE,SIZE);
  for(let y=0;y<SIZE;y++)for(let x=0;x<SIZE;x++){
@@ -742,15 +745,25 @@ function compose(){
    for(let channel=0;channel<3;channel++){
     out.data[k+channel]=Math.round(src[k+channel]/85)*85;
    }
-  }else if(filter==='bw'){
+  }else if(filter==='bw'||filter==='poster_bw'||filter==='comic_bw'){
    const gray=Math.round(0.299*src[k]+0.587*src[k+1]+0.114*src[k+2]);
-   out.data[k]=out.data[k+1]=out.data[k+2]=gray;
+   let value=gray;
+   if(filter==='poster_bw'){
+    // Bold grayscale poster: five flat tones, with no change to the checkerboard.
+    value=gray<51?18:gray<111?82:gray<165?147:gray<218?211:250;
+   }else if(filter==='comic_bw'){
+    // The existing comic pipeline inks the contours before grayscale conversion.
+    // Five ink-like values retain the face while reducing it to printed comic shading.
+    value=gray<48?18:gray<98?82:gray<153?147:gray<204?211:250;
+   }
+   out.data[k]=out.data[k+1]=out.data[k+2]=value;
   }else{
    out.data[k]=src[k];out.data[k+1]=src[k+1];out.data[k+2]=src[k+2];
   }
   out.data[k+3]=255;
  }
  ctx.putImageData(out,0,0);
+ // Sharing and both save formats are generated from the newly filtered result canvas.
  prepareShare();
 }
 el('selfusFilter').addEventListener('change',()=>{if(shots[0]&&shots[1])compose()});
