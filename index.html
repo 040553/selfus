@@ -136,6 +136,9 @@ header,.panel,.capture-header,.intro-explanation,.intro-assurance,.intro-privacy
 .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
 #output .note-field{margin-top:25px}
 #output .caption-row{display:flex;align-items:center;gap:5px;width:100%}
+#output .filter-control{position:relative;flex:none;display:inline-flex;align-items:center;gap:3px;min-height:44px;padding:0 8px;border:1px solid #70808f;border-radius:9px;color:#fff;background:#18232d;font-size:14px;white-space:nowrap}
+#output .filter-control select{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer;font-size:16px}
+#output .filter-control:focus-within{outline:2px solid #fff;outline-offset:2px}
 #output .caption-row input{flex:1 1 0;min-width:0;width:0;font-size:16px;text-align:left;padding:11px 9px}
 #output .caption-row input::placeholder{font-size:clamp(11px,3.3vw,13px);opacity:1}
 #output .caption-row input:focus::placeholder{color:transparent}
@@ -330,7 +333,13 @@ main{padding-bottom:38px}
 <p class="status" id="status" role="status"></p><div id="retryWrap" class="controls hidden"><button id="retryCamera" type="button" data-i18n="retry">Try camera again</button></div>
 </section>
 <section id="output" class="panel hidden"><canvas id="result" class="result" width="720" height="720"></canvas><p class="hint" data-i18n="resolution">Checkerboard resolution</p><div id="resolutions" class="resolutions"></div>
-<div class="note-field"><label class="sr-only" for="personalMessage" data-i18n="caption">Caption (optional)</label><div class="caption-row"><input id="personalMessage" type="text" maxlength="40" placeholder="Write your caption (optional)…" data-i18n-placeholder="placeholder" autocomplete="off" aria-describedby="messageCount"><output id="messageCount" for="personalMessage" aria-live="off">0/40</output></div></div>
+<div class="note-field"><label class="sr-only" for="personalMessage" data-i18n="caption">Caption (optional)</label><div class="caption-row"><div class="filter-control">
+ <span id="filterTitle" data-i18n="filterTitle">Filters</span><span aria-hidden="true"> ▾</span>
+ <select id="selfusFilter" aria-labelledby="filterTitle">
+  <option value="original" data-i18n="filterOriginal">Original</option>
+  <option value="bw" data-i18n="filterBW">Black and white</option>
+ </select>
+</div><input id="personalMessage" type="text" maxlength="40" placeholder="Write your caption (optional)…" data-i18n-placeholder="placeholder" autocomplete="off" aria-describedby="messageCount"><output id="messageCount" for="personalMessage" aria-live="off">0/40</output></div></div>
 <div class="controls output-actions"><button id="restartHome" type="button" class="secondary" aria-label="Return to home and start over" title="Return to home and start over"><svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M9 21v-7h6v7"/></svg></button><button id="share" type="button" class="secondary" data-i18n="share" disabled>Share</button><button id="save" type="button" data-i18n="save">Save</button></div><p id="shareStatus" class="share-status" role="status" aria-live="polite"></p>
 <p class="whatsapp-follow"><a href="https://whatsapp.com/channel/0029VbEIwRb1SWsts5fsA52R" target="_blank" rel="noopener noreferrer">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.87 11.87 0 0 0 12.08 0C5.5 0 .14 5.35.14 11.93c0 2.1.55 4.15 1.59 5.97L0 24l6.25-1.64a11.94 11.94 0 0 0 5.72 1.46h.01c6.58 0 11.94-5.35 11.94-11.93 0-3.19-1.24-6.18-3.4-8.41ZM12 21.78h-.01a9.86 9.86 0 0 1-5.02-1.37l-.36-.21-3.71.97.99-3.61-.24-.37a9.88 9.88 0 0 1-1.52-5.28C2.13 6.5 6.55 2.08 12 2.08c2.64 0 5.12 1.03 6.99 2.9a9.8 9.8 0 0 1 2.89 7 9.9 9.9 0 0 1-9.88 9.8Zm5.43-7.39c-.3-.15-1.77-.87-2.04-.97-.28-.1-.48-.15-.68.15-.2.3-.78.97-.95 1.17-.17.2-.35.23-.65.08-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.47-1.76-1.64-2.06-.18-.3-.02-.46.13-.61.14-.14.3-.35.45-.53.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.48-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.05 1.03-1.05 2.5s1.08 2.89 1.23 3.09c.15.2 2.13 3.25 5.16 4.56.72.31 1.29.5 1.73.64.73.23 1.4.2 1.93.12.59-.09 1.77-.73 2.02-1.43.25-.7.25-1.3.18-1.43-.08-.12-.28-.2-.58-.35Z"/></svg>
@@ -382,7 +391,7 @@ intro2:"SelfUs.art combines the two selfies into a checkerboard portrait, with e
 fun:"Play freely!",assurance:"Free? Yes\nAI? No - Morphing? No\nSharing? Why not?",
 playInvitation:"Your turn!",start:"Take a SelfUs",step:"Selfie 1",heading:"One of you faces the camera",guide:"Align your eyes and nose with the guides",
 permission:"Allow your browser to access the camera when prompted",take:"I'll take my selfie",retake:"I'll retake my selfie",next:"Let's move to selfie 2 →",overlay:"First selfie overlay",retry:"Try camera again",
-outhead:"Here's your SelfUs!",halfQuestion:"Where is my other half?",outdesc:"Two selfies. Alternating squares. One shared image.",resolution:"Checkerboard resolution",caption:"Caption (optional)",
+filterTitle:"Filters",filterOriginal:"Original",filterBW:"Black and white",outhead:"Here's your SelfUs!",halfQuestion:"Where is my other half?",outdesc:"Two selfies. Alternating squares. One shared image.",resolution:"Checkerboard resolution",caption:"Caption (optional)",
 placeholder:"Write your caption (optional)…",notehelp:"Added under the saved photo.",save:"Save",share:"Share",shareUnavailable:"Direct image sharing is not supported by this browser. You can save your SelfUs and share it from your photos.",shareFailed:"Unable to share this image. Please try again.",
 contact:"Any feedback?",followWhatsapp:"Follow us on WhatsApp",
 secondHeading:"It’s the other person’s turn to take the smartphone",secondGuide:"Stand in the same spot. Use the overlay to align your face with selfie 1",
@@ -401,7 +410,7 @@ intro2:"SelfUs.art combine les deux selfies en un portrait en damier, auquel cha
 fun:"Amusez-vous librement !",assurance:"Free? Yes\nAI? No - Morphing? No\nSharing? Why not?",
 playInvitation:"À vous de jouer !",start:"Prenons un SelfUs",step:"Selfie 1",heading:"L’un de vous se place face à la caméra",guide:"Aligne tes yeux et ton nez sur les repères",
 permission:"Autorise l’accès à la caméra lorsque ton navigateur le demande",take:"Je prends mon selfie",retake:"Je reprends mon selfie",next:"Passons au selfie 2 →",overlay:"Superposition du premier selfie",retry:"Réessayer la caméra",
-outhead:"Voici votre SelfUs !",halfQuestion:"Où est ma moitié ?",outdesc:"Deux selfies. Des cases alternées. Une image commune.",resolution:"Résolution du damier",caption:"Légende (facultative)",
+filterTitle:"Filtres",filterOriginal:"Original",filterBW:"Noir et blanc",outhead:"Voici votre SelfUs !",halfQuestion:"Où est ma moitié ?",outdesc:"Deux selfies. Des cases alternées. Une image commune.",resolution:"Résolution du damier",caption:"Légende (facultative)",
 placeholder:"Écrivez votre légende (facultative)…",notehelp:"Ajoutée sous la photo enregistrée.",save:"Enregistrer",share:"Partager",shareUnavailable:"Le partage direct de l’image n’est pas disponible ici. Enregistrez votre SelfUs puis partagez-le depuis vos photos.",shareFailed:"Impossible de partager cette image. Réessayez.",
 contact:"Une remarque ?",followWhatsapp:"Suivez-nous sur WhatsApp",
 secondHeading:"C’est au tour de l’autre de prendre le smartphone",secondGuide:"Place-toi au même endroit. Utilise la superposition pour aligner ton visage sur le selfie 1",
@@ -421,7 +430,7 @@ copyright:"© 2026 SelfUs.art — Todos los derechos reservados.",
  fun:"¡Diviértanse libremente!",assurance:"Free? Yes\nAI? No - Morphing? No\nSharing? Why not?",
  playInvitation:"¡Les toca jugar!",start:"Tomemos un SelfUs",step:"Selfie 1",heading:"Uno de los dos se coloca frente a la cámara",guide:"Alinea tus ojos y tu nariz con las guías",
  permission:"Permite que el navegador acceda a la cámara cuando te lo solicite",take:"Me hago mi selfie",retake:"Repito mi selfie",next:"Pasemos al selfie 2 →",overlay:"Superposición del primer selfie",retry:"Volver a probar la cámara",
- outhead:"¡Aquí está el SelfUs!",halfQuestion:"¿Dónde está mi otra mitad?",outdesc:"Dos selfies. Casillas alternadas. Una imagen compartida.",resolution:"Resolución del damero",caption:"Leyenda (opcional)",
+ filterTitle:"Filtros",filterOriginal:"Original",filterBW:"Blanco y negro",outhead:"¡Aquí está el SelfUs!",halfQuestion:"¿Dónde está mi otra mitad?",outdesc:"Dos selfies. Casillas alternadas. Una imagen compartida.",resolution:"Resolución del damero",caption:"Leyenda (opcional)",
  placeholder:"Escriban su leyenda (opcional)…",notehelp:"Se añadirá debajo de la foto guardada.",save:"Guardar",share:"Compartir",shareUnavailable:"Este navegador no permite compartir directamente la imagen. Guarda tu SelfUs y compártelo desde tus fotos.",shareFailed:"No se pudo compartir esta imagen. Inténtalo de nuevo.",
  contact:"¿Algún comentario?",followWhatsapp:"Síguenos en WhatsApp",
  secondHeading:"Ahora le toca a la otra persona tomar el teléfono",secondGuide:"Colócate en el mismo lugar. Usa la superposición para alinear tu rostro con el selfie 1",
@@ -440,7 +449,7 @@ copyright:"© 2026 SelfUs.art — Todos los derechos reservados.",
  fun:"Divertitevi liberamente!",assurance:"Free? Yes\nAI? No - Morphing? No\nSharing? Why not?",
  playInvitation:"Tocca a voi!",start:"Facciamo un SelfUs",step:"Selfie 1",heading:"Uno di voi si mette davanti alla fotocamera",guide:"Allinea gli occhi e il naso alle guide",
  permission:"Consenti al browser di accedere alla fotocamera quando richiesto",take:"Scatto il mio selfie",retake:"Rifaccio il mio selfie",next:"Passiamo al selfie 2 →",overlay:"Sovrapposizione del primo selfie",retry:"Riprova con la fotocamera",
- outhead:"Ecco il vostro SelfUs!",halfQuestion:"Dov’è la mia metà?",outdesc:"Due selfie. Riquadri alternati. Un’unica immagine condivisa.",resolution:"Risoluzione della scacchiera",caption:"Didascalia (facoltativa)",
+ filterTitle:"Filtri",filterOriginal:"Originale",filterBW:"Bianco e nero",outhead:"Ecco il vostro SelfUs!",halfQuestion:"Dov’è la mia metà?",outdesc:"Due selfie. Riquadri alternati. Un’unica immagine condivisa.",resolution:"Risoluzione della scacchiera",caption:"Didascalia (facoltativa)",
  placeholder:"Scrivi una didascalia (facoltativa)…",notehelp:"Aggiunta sotto la foto salvata.",save:"Salva",share:"Condividi",shareUnavailable:"Questo browser non supporta la condivisione diretta dell’immagine. Salva il tuo SelfUs e condividilo dalla galleria delle foto.",shareFailed:"Impossibile condividere l’immagine. Riprova.",
  contact:"Hai un suggerimento?",followWhatsapp:"Seguici su WhatsApp",
  secondHeading:"Ora tocca all’altra persona prendere lo smartphone",secondGuide:"Mettiti nello stesso punto. Usa la sovrapposizione per allineare il viso al selfie 1",
@@ -670,23 +679,31 @@ function capture(){
   }
  }catch(e){message(tr('captureFailed')+e.message)}
 }
-async function begin(){shots=[null,null];phase=0;taken=false;captionDraft='';syncCaption();el('next').textContent=tr('next');display('capture');ui();await cameraStart()}
+async function begin(){el('selfusFilter').value='original';shots=[null,null];phase=0;taken=false;captionDraft='';syncCaption();el('next').textContent=tr('next');display('capture');ui();await cameraStart()}
 async function next(){
  if(phase===0){phase=1;taken=false;el('next').textContent=tr('next');ui();message('');}
  else if(shots[0]&&shots[1]){stop();compose();display('output')}
 }
 async function retake(){shots[phase]=null;taken=false;el('next').classList.add('hidden');ui();if(!stream)await cameraStart();else message('')}
 function compose(){
+ const grayscale=el('selfusFilter').value==='bw';
  const a=shots[0].getContext('2d').getImageData(0,0,SIZE,SIZE).data;
  const b=shots[1].getContext('2d').getImageData(0,0,SIZE,SIZE).data;
  const ctx=result.getContext('2d'),out=ctx.createImageData(SIZE,SIZE);
  for(let y=0;y<SIZE;y++)for(let x=0;x<SIZE;x++){
   const k=(y*SIZE+x)*4,src=((Math.floor(x*cells/SIZE)+Math.floor(y*cells/SIZE))%2===0)?a:b;
-  out.data[k]=src[k];out.data[k+1]=src[k+1];out.data[k+2]=src[k+2];out.data[k+3]=255;
+  if(grayscale){
+   const gray=Math.round(0.299*src[k]+0.587*src[k+1]+0.114*src[k+2]);
+   out.data[k]=out.data[k+1]=out.data[k+2]=gray;
+  }else{
+   out.data[k]=src[k];out.data[k+1]=src[k+1];out.data[k+2]=src[k+2];
+  }
+  out.data[k+3]=255;
  }
  ctx.putImageData(out,0,0);
  prepareShare();
 }
+el('selfusFilter').addEventListener('change',()=>{if(shots[0]&&shots[1])compose()});
 el('start').addEventListener('click',begin);
 el('retryCamera').addEventListener('click',cameraStart);
 el('backToIntro').addEventListener('click',()=>{if(phase!==0||taken)return;stop();display('intro');message('');window.scrollTo(0,0)});
