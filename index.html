@@ -786,19 +786,23 @@ function makePolaroid(){
  // Lower line: enlarged logo + localized “Made with SelfUs.art” + date.
  const cartoucheParts=[
   {text:tr('madeWith'),weight:'500',color:'#ffffff'},
-  {text:'Self',weight:'750',color:'#ffffff'},
-  {text:'Us',weight:'750',color:'#FF6A00'},
-  {text:'.art',weight:'750',color:'#ffffff'},
+  {text:'Self',weight:'700',color:'#ffffff'},
+  {text:'Us',weight:'700',color:'#FF6A00'},
+  {text:'.art',weight:'700',color:'#ffffff'},
   {text:tr('onDate')+date,weight:'500',color:'#ffffff'}
  ];
- const textSize=32;
+ let textSize=32;
  const fontFor=weight=>weight+' '+textSize+'px system-ui,-apple-system,sans-serif';
  const measure=(text,weight)=>{c.font=fontFor(weight);return c.measureText(text).width};
  const padX=22, badgeH=78, r=12;
  const logoSize=68, logoGap=18;
- const logoImg=el('start')?.querySelector('.logo-start-image');
- const textW=cartoucheParts.reduce((sum,p)=>sum+measure(p.text,p.weight),0);
- const badgeW=textW+2*padX+logoSize+logoGap;
+ const logoImg=document.querySelector('#intro .logo-start-image');
+ const hasLogo=logoImg && logoImg.complete && logoImg.naturalWidth>0;
+ const logoWidth=hasLogo ? logoSize+logoGap : 0;
+ const lineWidth=()=>cartoucheParts.reduce((sum,p)=>sum+measure(p.text,p.weight),0);
+ while(textSize>16 && lineWidth()+logoWidth+2*padX>w-2*margin)textSize--;
+ const textW=lineWidth();
+ const badgeW=textW+2*padX+logoWidth;
  const x=(w-badgeW)/2;
  const y=bandTop+162;
  const by=y-badgeH/2;
@@ -812,13 +816,22 @@ function makePolaroid(){
  c.lineTo(x+r,by+badgeH);
  c.quadraticCurveTo(x,by+badgeH,x,by+badgeH-r);
  c.lineTo(x,by+r);c.quadraticCurveTo(x,by,x+r,by);c.closePath();c.fill();
- if(logoImg&&logoImg.complete&&logoImg.naturalWidth>0){
+ if(hasLogo){
   c.drawImage(logoImg,x+padX,y-logoSize/2,logoSize,logoSize);
  }
- let tx=x+padX+logoSize+logoGap;
+ let tx=x+padX+logoWidth;
+ c.textBaseline='alphabetic';
+ let ascent=0,descent=0;
+ for(const part of cartoucheParts){
+  c.font=fontFor(part.weight);
+  const bounds=c.measureText(part.text);
+  ascent=Math.max(ascent,bounds.actualBoundingBoxAscent);
+  descent=Math.max(descent,bounds.actualBoundingBoxDescent);
+ }
+ const baseline=y+(ascent-descent)/2;
  for(const part of cartoucheParts){
   c.font=fontFor(part.weight);c.fillStyle=part.color;
-  c.fillText(part.text,tx,y);tx+=measure(part.text,part.weight);
+  c.fillText(part.text,tx,baseline);tx+=measure(part.text,part.weight);
  }
  c.restore();
  return print;
@@ -884,15 +897,15 @@ function makeSquarePrint(){
  const date=new Date().toLocaleDateString(tr('locale'),{day:'numeric',month:'short',year:'numeric'});
  const parts=[
   {text:tr('madeWith'),weight:'500',color:'#101827'},
-  {text:'Self',weight:'750',color:'#101827'},
-  {text:'Us',weight:'750',color:'#FF6A00'},
-  {text:'.art',weight:'750',color:'#101827'},
+  {text:'Self',weight:'700',color:'#101827'},
+  {text:'Us',weight:'700',color:'#FF6A00'},
+  {text:'.art',weight:'700',color:'#101827'},
   {text:tr('onDate')+date,weight:'500',color:'#101827'}
  ];
  const img=document.querySelector('#intro .logo-start-image');
- const padX=20, badgeH=56, r=10, bottom=16;
- const logoSize=38, logoGap=12;
- let fontSize=18;
+ const padX=22, badgeH=66, r=12, bottom=16;
+ const logoSize=46, logoGap=14;
+ let fontSize=22;
  const fontFor=weight=>weight+' '+fontSize+'px system-ui,-apple-system,sans-serif';
  const measure=(text,weight)=>{c.font=fontFor(weight);return c.measureText(text).width};
  while(fontSize>10){
